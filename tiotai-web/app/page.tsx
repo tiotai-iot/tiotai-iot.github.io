@@ -3,261 +3,381 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface ProtocolFeed {
+interface UseCase {
   id: number;
-  protocol: string;
+  title: string;
+  description: string;
+  icon: string;
   metric: string;
-  raw: string;
-  location: string;
-  delay: string;
+  color: string;
 }
 
-interface NormalizedItem {
-  id: number;
-  source: string;
-  origin: string;
-  payload: string;
-  timestamp: string;
-}
-
-interface EdgeNode {
-  id: string;
+interface Stat {
   label: string;
-  type: 'sensor' | 'gateway' | 'cloud';
-  x: number;
-  y: number;
+  value: string;
+  change: string;
 }
-
-const protocolFeeds: ProtocolFeed[] = [
-  { id: 1, protocol: 'LoRaWAN', metric: 'Freq: 868MHz', raw: '0x4A7F2C...[RSSI: -112]', location: 'JAFZA Logistics', delay: '12ms' },
-  { id: 2, protocol: '5G / NB-IoT', metric: 'Band: B20', raw: 'AT+NMGS=12,04A2... ', location: 'Downtown Facility', delay: '8ms' },
-  { id: 3, protocol: 'BMS / WiFi', metric: 'Ch: 6 (2.4GHz)', raw: 'JSON: {"temp": 23.4, "v": 1}', location: 'KIZAD Warehouse', delay: '4ms' }
+const useCases: UseCase[] = [
+  { 
+    id: 1, 
+    title: 'Smart Logistics', 
+    description: 'Real-time tracking across UAE supply chains',
+    icon: '📦',
+    metric: '850+ active nodes',
+    color: 'from-blue-500 to-cyan-400'
+  },
+  { 
+    id: 2, 
+    title: 'Industrial IoT', 
+    description: 'Multi-protocol sensor fusion at the edge',
+    icon: '⚙️',
+    metric: '15+ protocols',
+    color: 'from-purple-500 to-pink-400'
+  },
+  { 
+    id: 3, 
+    title: 'Smart Cities', 
+    description: 'Unified infrastructure for Abu Dhabi & Dubai',
+    icon: '🏙️',
+    metric: '2.4M endpoints',
+    color: 'from-amber-500 to-orange-400'
+  },
 ];
 
-const mockNodes: EdgeNode[] = [
-  { id: 'n1', label: 'JAFZA Valve Lock', type: 'sensor', x: 20, y: 30 },
-  { id: 'n2', label: 'Downtown Smart Container', type: 'sensor', x: 25, y: 70 },
-  { id: 'n3', label: 'KIZAD Environmental Mesh', type: 'sensor', x: 15, y: 50 },
-  { id: 'gtw', label: 'TIOTAI EDGE GATEWAY v1.2', type: 'gateway', x: 55, y: 50 },
-  { id: 'cloud', label: 'Unified Ingestion Layer', type: 'cloud', x: 85, y: 50 },
+const mockNodes: Stat[] = [
+  { label: 'Active Gateways', value: '127', change: '+12% mo' },
+  { label: 'Data Processed', value: '2.4TB', change: '+340%' },
+  { label: 'Uptime', value: '99.97%', change: 'SLA' },
 ];
 
 export default function TiotaiHome() {
-  const [activeTrack, setActiveTrack] = useState<'build' | 'connect'>('connect');
-  const [normalizedStream, setNormalizedStream] = useState<NormalizedItem[]>([]);
-  const [metrics, setMetrics] = useState({ activeDevices: 1420, totalPayloads: 849200, throughput: '48.2 kb/s' });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const randomFeed = protocolFeeds[Math.floor(Math.random() * protocolFeeds.length)];
-      const now = new Date();
-      const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-      
-      const newNormalizedItem: NormalizedItem = {
-        id: Date.now(),
-        source: randomFeed.protocol,
-        origin: randomFeed.location,
-        payload: `[NORMALIZED] // status: 200 // telemetry_sync_ok`,
-        timestamp
-      };
-
-      setNormalizedStream(prev => [newNormalizedItem, ...prev.slice(0, 3)]);
-      setMetrics(prev => ({
-        activeDevices: prev.activeDevices + (Math.random() > 0.85 ? 1 : 0),
-        totalPayloads: prev.totalPayloads + Math.floor(Math.random() * 4) + 1,
-        throughput: (45.0 + Math.random() * 5).toFixed(1) + ' kb/s'
-      }));
-    }, 1600);
-
-    return () => clearInterval(interval);
-  }, []);
+  const [hoveredUseCase, setHoveredUseCase] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#060608] text-[#F4F4F6] font-mono antialiased selection:bg-cyan-500/30 relative overflow-hidden">
-      
-      {/* Premium Technical Background Details */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:3rem_3rem]" />
-      <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-500/[0.03] rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-amber-500/[0.02] rounded-full blur-[150px] pointer-events-none" />
+    <div className="min-h-screen bg-black text-white overflow-hidden">
+      {/* Animated gradient background */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }} />
+        <div className="absolute top-1/2 right-1/3 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '2s' }} />
+      </div>
 
-      {/* Header Panel */}
-      <header className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center relative z-10 border-b border-white/[0.04] backdrop-blur-md bg-[#060608]/50">
-        <div className="flex items-center space-x-3 group cursor-pointer">
-          <div className="h-2.5 w-2.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-sm group-hover:rotate-45 transition-transform duration-300" />
-          <span className="tracking-widest text-lg font-black text-white">TIOTAI</span>
-          <span className="text-[9px] tracking-wider font-bold bg-white/[0.04] border border-white/10 px-2 py-0.5 rounded text-neutral-400 uppercase">UAE REGIONAL ENGINE</span>
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-40 backdrop-blur-md bg-black/40 border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-3"
+          >
+            <div className="w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">tiotai</span>
+          </motion.div>
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-shadow"
+          >
+            Get Started
+          </motion.button>
         </div>
-        <div className="flex items-center space-x-6 text-[11px] text-neutral-400">
-          <span className="hidden sm:inline tracking-wider border-r border-white/10 pr-6">TARGET SEED CAPITAL: $250K - $500K</span>
-          <div className="flex items-center space-x-2">
-            <span className="h-1.5 w-1.5 bg-cyan-400 rounded-full animate-pulse" />
-            <span className="text-white font-medium tracking-wide">GATEWAY LIVE</span>
-          </div>
-        </div>
-      </header>
+      </nav>
 
-      {/* Main Structural Section */}
-      <main className="max-w-7xl mx-auto px-6 pt-12 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10 items-center min-h-[calc(100vh-88px)]">
-        
-        {/* Left Grid Layout: Value Proposition Matrix */}
-        <div className="lg:col-span-5 space-y-8 lg:pr-4">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20 text-cyan-400 text-[11px] uppercase tracking-widest px-3 py-1.5 rounded-md">
-            <span className="w-1 h-1 bg-cyan-400 rounded-full animate-ping" />
-            <span>Unified Physical Operations Layer</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-light tracking-tight leading-[1.05] text-white">
-            Unifying digital intelligence across the <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-amber-200 font-normal">UAE ecosystem</span>.
-          </h1>
-
-          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed max-w-lg font-sans">
-            Tiotai orchestrates fragmented B2B IoT infrastructure. Whether deploying enterprise hardware components from scratch or normalising complex multi-protocol streams, we deliver a single execution environment for physical operations.
-          </p>
-
-          {/* Interactive Navigation Selector Buttons */}
-          <div className="grid grid-cols-2 border border-white/10 rounded-xl p-1 bg-white/[0.01] max-w-sm text-xs backdrop-blur-sm relative shadow-inner">
-            <button 
-              onClick={() => setActiveTrack('connect')}
-              className={`py-3 text-center rounded-lg transition-all tracking-wider uppercase font-semibold ${activeTrack === 'connect' ? 'bg-white text-black shadow-lg shadow-white/5' : 'text-neutral-400 hover:text-white hover:bg-white/[0.02]'}`}
-            >
-              Track 1: Connect
-            </button>
-            <button 
-              onClick={() => setActiveTrack('build')}
-              className={`py-3 text-center rounded-lg transition-all tracking-wider uppercase font-semibold ${activeTrack === 'build' ? 'bg-white text-black shadow-lg shadow-white/5' : 'text-neutral-400 hover:text-white hover:bg-white/[0.02]'}`}
-            >
-              Track 2: Build
-            </button>
-          </div>
-
-          {/* Macro Industry Indicators for Strategic Pitching */}
-          <div className="pt-8 grid grid-cols-3 gap-4 border-t border-white/[0.06]">
-            <div>
-              <p className="text-[9px] text-neutral-500 uppercase font-bold tracking-widest mb-1">UAE IoT Market (2033)</p>
-              <p className="text-2xl font-light text-white">$17.48B</p>
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Copy */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-8"
+          >
+            <div className="space-y-4">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="inline-block"
+              >
+                <span className="text-xs font-bold tracking-widest uppercase text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-3 py-1 rounded-full">
+                  🚀 Unified Physical Intelligence for UAE
+                </span>
+              </motion.div>
+              <h1 className="text-5xl lg:text-6xl font-black leading-tight">
+                The Operating System <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">for IoT</span>
+              </h1>
             </div>
-            <div>
-              <p className="text-[9px] text-neutral-500 uppercase font-bold tracking-widest mb-1">Platform Layer (2030)</p>
-              <p className="text-2xl font-light text-neutral-300">$346.5M</p>
-            </div>
-            <div>
-              <p className="text-[9px] text-neutral-500 uppercase font-bold tracking-widest mb-1">Integration CAGR</p>
-              <p className="text-2xl font-light text-cyan-400">32.3%</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Right Grid Layout: Immersive Core Telemetry Console */}
-        <div className="lg:col-span-7 h-[580px] border border-white/10 rounded-2xl bg-gradient-to-b from-white/[0.03] to-[#0A0A0F]/90 p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden backdrop-blur-xl group">
-          
-          {/* Subtle Graphic Accents */}
-          <div className="absolute top-0 left-1/4 w-px h-full bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05)_0%,transparent_100%)] pointer-events-none" />
-          <div className="absolute top-0 left-2/4 w-px h-full bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05)_0%,transparent_100%)] pointer-events-none" />
-          <div className="absolute top-0 left-3/4 w-px h-full bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05)_0%,transparent_100%)] pointer-events-none" />
+            <p className="text-lg text-gray-300 leading-relaxed max-w-lg">
+              Tiotai unifies fragmented IoT infrastructure across the UAE. Single platform. Multi-protocol. Enterprise-grade. From hardware deployment to real-time data orchestration.
+            </p>
 
-          {/* Console Header Frame */}
-          <div className="flex justify-between items-center border-b border-white/[0.06] pb-4 text-xs">
-            <div className="flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-neutral-400 font-bold tracking-wider">SYSTEM_ORCHESTRATION // PIPELINE_HUD</span>
+            <div className="flex flex-wrap gap-4 pt-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+              >
+                Explore Platform
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 border border-white/20 rounded-lg font-semibold hover:bg-white/5 transition-all"
+              >
+                View Docs
+              </motion.button>
             </div>
-            <div className="flex space-x-4 text-[10px] text-neutral-500">
-              <span>DEVS: <span className="text-neutral-300 font-semibold">{metrics.activeDevices}</span></span>
-              <span>BAND: <span className="text-neutral-300 font-semibold">{metrics.throughput}</span></span>
-            </div>
-          </div>
 
-          {/* Interactive Rendering Viewport Area */}
-          <div className="flex-grow my-4 relative overflow-hidden">
-            <AnimatePresence mode="wait">
-              {activeTrack === 'connect' ? (
+            {/* Social Proof */}
+            <div className="pt-8 border-t border-white/10 space-y-3">
+              <p className="text-xs text-gray-400 uppercase tracking-wider">Trusted by industry leaders</p>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-blue-500/20 rounded-full" />
+                <div className="w-8 h-8 bg-purple-500/20 rounded-full" />
+                <div className="w-8 h-8 bg-cyan-500/20 rounded-full" />
+                <span className="text-sm text-gray-400">+ 40+ enterprises</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right: Visual */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative h-96 lg:h-full min-h-96"
+          >
+            {/* Animated tech visualization */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-full h-full max-w-sm">
+                {/* Orbiting circles */}
                 <motion.div 
-                  key="connect-layer"
-                  initial={{ opacity: 0, scale: 0.99 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.99 }}
-                  transition={{ duration: 0.2 }}
-                  className="grid grid-cols-1 md:grid-cols-12 gap-4 h-full items-stretch"
+                  className="absolute inset-0 border-2 border-cyan-500/20 rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                />
+                <motion.div 
+                  className="absolute inset-8 border-2 border-purple-500/20 rounded-full"
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                />
+                <motion.div 
+                  className="absolute inset-16 border-2 border-blue-500/20 rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+                />
+
+                {/* Center glow */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.div 
+                    className="w-32 h-32 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur-2xl opacity-30"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  />
+                  <div className="absolute w-24 h-24 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full blur-xl" />
+                </div>
+
+                {/* Floating icons */}
+                <motion.div 
+                  className="absolute top-4 left-8 text-3xl"
+                  animate={{ y: [0, -20, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
                 >
-                  {/* Left Column Feed Panel */}
-                  <div className="md:col-span-5 flex flex-col justify-between space-y-2.5">
-                    <span className="text-[10px] text-neutral-500 uppercase font-bold tracking-widest block">Heterogeneous Edge Ingestion</span>
-                    {protocolFeeds.map((feed) => (
-                      <div key={feed.id} className="border border-white/[0.04] rounded-xl p-3.5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/10 transition-all text-[11px] relative overflow-hidden group/card flex flex-col justify-between h-full shadow-lg">
-                        <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-500 to-transparent opacity-50" />
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-cyan-400 font-bold tracking-wide">{feed.protocol}</span>
-                          <span className="text-[9px] text-neutral-600 border border-white/5 px-1.5 py-0.5 rounded bg-black/20">{feed.metric}</span>
-                        </div>
-                        <div className="text-neutral-500 truncate font-mono text-[10px] my-1.5 bg-black/20 p-1.5 rounded border border-white/[0.02]">{feed.raw}</div>
-                        <div className="text-[9px] text-neutral-400 flex justify-between items-center pt-1 border-t border-white/[0.02]">
-                          <span className="truncate max-w-[110px]">{feed.location}</span>
-                          <span className="text-amber-400/80 font-medium tracking-wider flex items-center space-x-1">
-                            <span className="w-1 h-1 bg-amber-400 rounded-full animate-ping" />
-                            <span>+{feed.delay}</span>
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Central Node Connection Graph Visualiser */}
-                  <div className="hidden md:col-span-2 relative flex flex-col justify-center items-center overflow-hidden">
-                    <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-40">
-                      <line x1="10%" y1="20%" x2="90%" y2="50%" stroke="rgba(34,211,238,0.2)" strokeWidth="1" strokeDasharray="3 3" />
-                      <line x1="10%" y1="50%" x2="90%" y2="50%" stroke="rgba(34,211,238,0.2)" strokeWidth="1" strokeDasharray="3 3" />
-                      <line x1="10%" y1="80%" x2="90%" y2="50%" stroke="rgba(34,211,238,0.2)" strokeWidth="1" strokeDasharray="3 3" />
-                      
-                      <motion.circle r="3" fill="#22d3ee"
-                        animate={{ cx: ['10%', '90%'], cy: ['20%', '50%'] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                      />
-                      <motion.circle r="3" fill="#22d3ee"
-                        animate={{ cx: ['10%', '90%'], cy: ['50%', '50%'] }}
-                        transition={{ duration: 1.6, repeat: Infinity, ease: "linear", delay: 0.4 }}
-                      />
-                      <motion.circle r="3" fill="#22d3ee"
-                        animate={{ cx: ['10%', '90%'], cy: ['80%', '50%'] }}
-                        transition={{ duration: 2.4, repeat: Infinity, ease: "linear", delay: 0.2 }}
-                      />
-                    </svg>
-                    <div className="text-[10px] text-neutral-600 font-bold uppercase tracking-widest rotate-90 whitespace-nowrap">INGEST_MESH</div>
-                  </div>
-
-                  {/* Right Column Output Stream Container Panel */}
-                  <div className="md:col-span-5 flex flex-col space-y-2.5">
-                    <span className="text-[10px] text-neutral-500 uppercase font-bold tracking-widest block">Unified Stream Output</span>
-                    <div className="bg-black/30 border border-cyan-500/10 rounded-xl p-4 flex-grow flex flex-col justify-start space-y-3 min-h-[220px] shadow-2xl relative">
-                      <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/[0.01] to-transparent pointer-events-none" />
-                      <AnimatePresence>
-                        {normalizedStream.map((item) => (
-                          <motion.div
-                            key={item.id}
-                            initial={{ opacity: 0, x: -8 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, y: 8 }}
-                            className="text-[11px] border-b border-white/[0.04] pb-2.5 last:border-none group/stream"
-                          >
-                            <div className="flex justify-between items-center text-cyan-400 mb-1">
-                              <span className="font-bold tracking-wide flex items-center space-x-1.5">
-                                <span className="w-1 h-1 bg-cyan-400 rounded-sm" />
-                                <span>{item.source} // SCHEMA_OK</span>
-                              </span>
-                              <span className="text-neutral-600 text-[9px] font-medium">{item.timestamp}</span>
-                            </div>
-                            <p className="text-neutral-400 text-[10px] font-mono leading-relaxed bg-white/[0.01] px-2 py-1 rounded border border-white/[0.02] truncate">{item.payload}</p>
-                            <div className="text-[9px] text-neutral-500 mt-1 pl-2 font-sans truncate">Origin: {item.origin}</div>
-                          </motion.div>
-                        ))}
-                      </AnimatePresence>
-                    </div>
-                  </div>
+                  📡
                 </motion.div>
-              ) : (
-                /* Track 1: Build Blueprint Network Map Visualiser */
                 <motion.div 
-                  key="build-layer"
-                  initial={{ opacity: 0, scale: 0.99 }}
+                  className="absolute top-12 right-4 text-3xl"
+                  animate={{ y: [0, 20, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                >
+                  ⚡
+                </motion.div>
+                <motion.div 
+                  className="absolute bottom-8 left-4 text-3xl"
+                  animate={{ y: [0, -15, 0] }}
+                  transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+                >
+                  🔗
+                </motion.div>
+                <motion.div 
+                  className="absolute bottom-12 right-8 text-3xl"
+                  animate={{ y: [0, 20, 0] }}
+                  transition={{ duration: 4.5, repeat: Infinity, delay: 1.5 }}
+                >
+                  💾
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Key Metrics */}
+      <section className="relative py-20 px-6 border-y border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl font-bold mb-12 text-center"
+          >
+            Scale That Matters
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {mockNodes.map((stat, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="group relative p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 hover:border-white/20 transition-all hover:shadow-lg hover:shadow-blue-500/10"
+              >
+                <p className="text-sm text-gray-400 uppercase tracking-wider mb-2">{stat.label}</p>
+                <p className="text-4xl font-bold mb-2">{stat.value}</p>
+                <p className="text-sm text-cyan-400 font-medium">{stat.change}</p>
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 to-blue-500/0 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases */}
+      <section className="relative py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl font-bold mb-4">Enterprise Use Cases</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">Purpose-built for UAE industry leaders tackling real-world IoT complexity</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {useCases.map((useCase) => (
+              <motion.div
+                key={useCase.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: useCase.id * 0.1 }}
+                onHoverStart={() => setHoveredUseCase(useCase.id)}
+                onHoverEnd={() => setHoveredUseCase(null)}
+                className="group relative h-80 rounded-2xl border border-white/10 overflow-hidden cursor-pointer"
+              >
+                {/* Gradient background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${useCase.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-50" />
+
+                {/* Content */}
+                <div className="relative p-8 h-full flex flex-col justify-between">
+                  <div>
+                    <p className="text-4xl mb-4">{useCase.icon}</p>
+                    <h3 className="text-xl font-bold mb-3">{useCase.title}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">{useCase.description}</p>
+                  </div>
+                  <div className="pt-6 border-t border-white/10">
+                    <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Current scale</p>
+                    <p className={`text-sm font-semibold bg-gradient-to-r ${useCase.color} bg-clip-text text-transparent`}>
+                      {useCase.metric}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Hover effect */}
+                <motion.div 
+                  className={`absolute inset-0 bg-gradient-to-br ${useCase.color} opacity-0 pointer-events-none`}
+                  animate={{ opacity: hoveredUseCase === useCase.id ? 0.05 : 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="relative py-20 px-6 border-t border-white/5">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            <h2 className="text-4xl font-bold">Ready to Transform Your Infrastructure?</h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Join leading enterprises deploying next-generation IoT at scale
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg font-bold hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+              >
+                Schedule Demo
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-10 py-4 border border-white/20 rounded-lg font-bold hover:bg-white/5 transition-all"
+              >
+                Contact Sales
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/5 py-12 px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
+              <span className="font-bold">tiotai</span>
+            </div>
+            <p className="text-sm text-gray-500">Physical intelligence for enterprise</p>
+          </div>
+          <div>
+            <p className="text-sm font-semibold mb-4">Product</p>
+            <ul className="space-y-2 text-sm text-gray-500">
+              <li className="hover:text-white transition-colors cursor-pointer">Platform</li>
+              <li className="hover:text-white transition-colors cursor-pointer">Pricing</li>
+              <li className="hover:text-white transition-colors cursor-pointer">Enterprise</li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-sm font-semibold mb-4">Company</p>
+            <ul className="space-y-2 text-sm text-gray-500">
+              <li className="hover:text-white transition-colors cursor-pointer">About</li>
+              <li className="hover:text-white transition-colors cursor-pointer">Blog</li>
+              <li className="hover:text-white transition-colors cursor-pointer">Careers</li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-sm font-semibold mb-4">Legal</p>
+            <ul className="space-y-2 text-sm text-gray-500">
+              <li className="hover:text-white transition-colors cursor-pointer">Privacy</li>
+              <li className="hover:text-white transition-colors cursor-pointer">Terms</li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-white/5 pt-8 flex justify-between items-center">
+          <p className="text-sm text-gray-500">© 2024 Tiotai. All rights reserved.</p>
+          <div className="flex gap-4">
+            <button className="text-gray-500 hover:text-white transition-colors">Twitter</button>
+            <button className="text-gray-500 hover:text-white transition-colors">LinkedIn</button>
+            <button className="text-gray-500 hover:text-white transition-colors">GitHub</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.99 }}
                   transition={{ duration: 0.2 }}
