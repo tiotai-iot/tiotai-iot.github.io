@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiotai — Unified IoT Infrastructure for the UAE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+  :root{
+    --ink:#15121c;
+    --navy:#1d1828;
+    --navy-2:#241f33;
+    --navy-card:#281f3a;
+    --line:rgba(255,133,105,0.18);
+    --line-soft:rgba(243,239,233,0.08);
+    --gold:#ff6b57;
+    --gold-bright:#ff8569;
+    --teal:#8fbfae;
+    --sand:#ece5da;
+    --ivory:#f3efe9;
+    --muted:#a89fc2;
+    --muted-2:#675f80;
+    --max:1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  h1,h2,h3,h4{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    color:var(--ivory);
+  }
+
+  .mono{
+    font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.02em;
+  }
+
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- background atmosphere ---------- */
+  .bg-grid{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 10%, transparent 70%);
+    pointer-events:none;
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    backdrop-filter:blur(14px) saturate(140%);
+    background:rgba(7,11,20,0.72);
+    border-bottom:1px solid var(--line-soft);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 32px;
+    max-width:var(--max);
+    margin:0 auto;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:800;
+    font-size:20px;
+    letter-spacing:-0.01em;
+  }
+  .logo .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 14px 2px rgba(255,107,87,0.5);
+  }
+  .nav-links{
+    display:flex;
+    gap:36px;
+    font-size:14px;
+    color:var(--muted);
+  }
+  .nav-links a{transition:color .2s;}
+  .nav-links a:hover{color:var(--sand);}
+  .nav-cta{
+    padding:10px 20px;
+    border:1px solid var(--gold);
+    border-radius:100px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--gold-bright);
+    transition:all .25s;
+  }
+  .nav-cta:hover{background:var(--gold);color:var(--ink);}
+  .nav-toggle{display:none;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:200px 32px 140px;
+    z-index:1;
+    overflow:hidden;
+    background:var(--ink);
+  }
+  #dither-root{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    opacity:0.55;
+  }
+  #dither-root canvas{
+    display:block;
+    width:100%!important;
+    height:100%!important;
+  }
+  .dither-container{
+    width:100%;
+    height:100%;
+    position:relative;
+  }
+  .hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background:linear-gradient(180deg, rgba(21,18,28,0.15) 0%, rgba(21,18,28,0.55) 60%, var(--ink) 100%);
+    pointer-events:none;
+  }
+  .hero-inner{
+    max-width:var(--max);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:60px;
+    align-items:center;
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    margin-bottom:26px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:6px;height:6px;
+    background:var(--teal);
+    border-radius:50%;
+  }
+  .hero h1{
+    font-size:clamp(40px,5.4vw,68px);
+    line-height:1.05;
+    margin-bottom:26px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--gold-bright);
+    background:linear-gradient(90deg,var(--gold-bright),var(--gold));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .hero p.lead{
+    font-size:18px;
+    line-height:1.65;
+    color:var(--muted);
+    max-width:540px;
+    margin-bottom:40px;
+  }
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:56px;}
+  .btn{
+    padding:15px 28px;
+    border-radius:10px;
+    font-size:14.5px;
+    font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    transition:all .25s ease;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--gold-bright),var(--gold));
+    color:#1b1304;
+    box-shadow:0 8px 30px -8px rgba(255,107,87,0.35);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px -8px rgba(255,107,87,0.5);}
+  .btn-ghost{
+    border:1px solid var(--line-soft);
+    color:var(--ivory);
+    background:rgba(255,255,255,0.02);
+  }
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+
+  .ticker{
+    display:flex;
+    gap:32px;
+    padding-top:28px;
+    border-top:1px solid var(--line-soft);
+    flex-wrap:wrap;
+  }
+  .ticker-item{display:flex;flex-direction:column;gap:4px;}
+  .ticker-item .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:24px;
+    font-weight:600;
+    color:var(--sand);
+  }
+  .ticker-item .label{
+    font-size:11.5px;
+    color:var(--muted-2);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+
+  /* ---------- hero visual: dual track signature ---------- */
+  .hero-visual{
+    position:relative;
+    height:480px;
+  }
+  .track-card{
+    position:absolute;
+    inset:0;
+    border-radius:24px;
+    background:linear-gradient(160deg,var(--navy-2),var(--navy));
+    border:1px solid var(--line-soft);
+    overflow:hidden;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);
+  }
+  .track-card svg{width:100%;height:100%;}
+
+  /* ---------- section shells ---------- */
+  section{
+    position:relative;
+    z-index:1;
+    padding:120px 32px;
+  }
+  .section-head{
+    max-width:680px;
+    margin-bottom:64px;
+  }
+  .section-head .eyebrow{color:var(--gold-bright);}
+  .section-head .eyebrow::before{background:var(--gold-bright);}
+  .section-head h2{
+    font-size:clamp(30px,3.6vw,44px);
+    line-height:1.12;
+    margin-bottom:18px;
+  }
+  .section-head p{
+    color:var(--muted);
+    font-size:16.5px;
+    line-height:1.7;
+  }
+  .alt-bg{background:linear-gradient(180deg,var(--navy) 0%, var(--ink) 100%);}
+
+  /* ---------- marquee divider (CurvedLoop) ---------- */
+  #marquee-divider{
+    padding:0;
+    overflow:hidden;
+  }
+  #curved-loop-root .curved-loop-jacket{
+    min-height:220px;
+  }
+  #curved-loop-root .curved-loop-svg{
+    fill:var(--ivory);
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:3.4rem;
+    letter-spacing:0.01em;
+  }
+  #curved-loop-root .curved-text{
+    fill:var(--ivory);
+  }
+  @media (max-width:620px){
+    #curved-loop-root .curved-loop-jacket{min-height:140px;}
+    #curved-loop-root .curved-loop-svg{font-size:1.8rem;}
+  }
+
+  /* ---------- usecases section ---------- */
+  #usecases {
+    padding-bottom: 0;
+  }
+  .usecases-header{
+    max-width:680px;
+    margin-bottom:60px;
+  }
+  .usecase-features{
+    display:flex;
+    flex-direction:row;
+    gap:32px;
+    margin-top:28px;
+    flex-wrap:wrap;
+  }
+  .uf-item{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    flex:1;
+    min-width:180px;
+  }
+  .uf-item i{
+    color:var(--teal);
+    margin-top:3px;
+    font-size:15px;
+    flex-shrink:0;
+  }
+  .uf-item span{
+    font-size:14.5px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+  .uf-item strong{color:var(--ivory);}
+  .usecases-gallery{
+    width:100%;
+    height:500px;
+    position:relative;
+    margin-top:20px;
+  }
+  #usecases-gallery-root{
+    width:100%;
+    height:100%;
+    position:absolute;
+    inset:0;
+  }
+  @media (max-width:980px){
+    .usecase-features{gap:20px;}
+    .usecases-gallery{height:380px;}
+  }
+  @media (max-width:620px){
+    .usecase-features{flex-direction:column; gap:14px;}
+    .usecases-gallery{height:300px;}
+  }
+
+  /* ---------- problem cards ---------- */
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .card{
+    background:var(--navy-card);
+    border:1px solid var(--line-soft);
+    border-radius:18px;
+    padding:32px 28px;
+    transition:border-color .25s, transform .25s;
+  }
+  .card:hover{border-color:var(--line);transform:translateY(-4px);}
+  .card .icon{
+    width:44px;height:44px;
+    border-radius:12px;
+    background:rgba(255,107,87,0.12);
+    color:var(--gold-bright);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;
+    margin-bottom:20px;
+  }
+  .card h3{font-size:18px;margin-bottom:10px;}
+  .card p{color:var(--muted);font-size:14.5px;line-height:1.6;}
+
+  /* ---------- market stats ---------- */
+  .stat-band{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line-soft);
+    border:1px solid var(--line-soft);
+    border-radius:18px;
+    overflow:hidden;
+    margin-top:8px;
+  }
+  .stat-tile{
+    background:var(--navy-2);
+    padding:40px 32px;
+    text-align:left;
+  }
+  .stat-tile .big{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(30px,4vw,42px);
+    font-weight:600;
+    color:var(--gold-bright);
+    display:block;
+    margin-bottom:10px;
+  }
+  .stat-tile .desc{font-size:14px;color:var(--muted);line-height:1.5;}
+  .market-note{
+    margin-top:28px;
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.7;
+    max-width:760px;
+    border-left:2px solid var(--teal);
+    padding-left:20px;
+  }
+
+  /* ---------- tracks (build/connect) ---------- */
+  .track-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  .track-panel{
+    background:var(--navy-card);
+    border:1px solid var(--line-soft);
+    border-radius:22px;
+    padding:40px;
+    position:relative;
+  }
+  .track-panel.gold{border-top:2px solid var(--gold);}
+  .track-panel.teal{border-top:2px solid var(--teal);}
+  .track-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    color:var(--muted-2);
+    margin-bottom:14px;
+    display:block;
+  }
+  .track-panel h3{font-size:24px;margin-bottom:16px;}
+  .track-panel p{color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:22px;}
+  .tag-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .tag-pill{
+    font-size:12px;
+    padding:7px 14px;
+    border-radius:100px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line-soft);
+    color:var(--sand);
+  }
+
+  .managed-strip{
+    margin-top:28px;
+    background:linear-gradient(120deg,rgba(143,191,174,0.10),rgba(255,107,87,0.08));
+    border:1px solid var(--line-soft);
+    border-radius:18px;
+    padding:28px 36px;
+    display:flex;
+    align-items:center;
+    gap:24px;
+  }
+  .managed-strip i{font-size:26px;color:var(--teal);}
+  .managed-strip p{color:var(--muted);font-size:14.5px;line-height:1.6;}
+  .managed-strip strong{color:var(--ivory);}
+
+  /* ---------- verticals ---------- */
+  .vert-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  .vert-card{
+    background:var(--navy-2);
+    border:1px solid var(--line-soft);
+    border-radius:16px;
+    padding:26px;
+  }
+  .vert-cat{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    margin-bottom:12px;
+    display:block;
+  }
+  .vert-card .vert-icon{
+    width:38px;height:38px;
+    border-radius:10px;
+    background:rgba(255,107,87,0.12);
+    color:var(--gold-bright);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;
+    margin-bottom:16px;
+  }
+  .vert-card h4{font-size:16px;margin-bottom:8px;}
+  .vert-card p{font-size:13.5px;color:var(--muted);line-height:1.55;}
+
+  /* ---------- business model ---------- */
+  .model-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+    margin-bottom:36px;
+  }
+  .model-card{
+    background:var(--navy-card);
+    border:1px solid var(--line-soft);
+    border-radius:20px;
+    padding:36px;
+  }
+  .model-card .range{
+    font-family:'JetBrains Mono',monospace;
+    font-size:28px;
+    color:var(--gold-bright);
+    margin:18px 0 12px;
+  }
+  .model-card h3{font-size:18px;margin-bottom:6px;}
+  .model-card p.sub{color:var(--muted);font-size:14px;line-height:1.6;}
+  .options-row{display:flex;gap:16px;margin-top:6px;}
+  .opt{
+    flex:1;
+    border:1px dashed var(--line-soft);
+    border-radius:14px;
+    padding:18px;
+  }
+  .opt span.lab{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--teal);
+  }
+  .opt p{font-size:13px;color:var(--muted);margin-top:6px;}
+
+  /* ---------- competitive matrix ---------- */
+  .matrix-wrap{
+    overflow-x:auto;
+    border:1px solid var(--line-soft);
+    border-radius:18px;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:680px;
+  }
+  thead th{
+    text-align:left;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--muted-2);
+    padding:20px 24px;
+    background:var(--navy-2);
+    border-bottom:1px solid var(--line-soft);
+  }
+  thead th:first-child{color:var(--gold-bright);}
+  tbody td{
+    padding:18px 24px;
+    font-size:14.5px;
+    border-bottom:1px solid var(--line-soft);
+    color:var(--muted);
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  tbody td:first-child{color:var(--ivory);font-weight:600;}
+  .yes{color:var(--teal);font-weight:600;}
+  .yes-strong{color:var(--gold-bright);font-weight:700;}
+
+  /* ---------- closing CTA ---------- */
+  .closing{
+    text-align:center;
+    padding:140px 32px;
+    position:relative;
+  }
+  .closing-card{
+    max-width:760px;
+    margin:0 auto;
+    padding:64px 48px;
+    border-radius:28px;
+    background:radial-gradient(circle at 30% 0%, rgba(255,107,87,0.16), transparent 60%), var(--navy-card);
+    border:1px solid var(--line);
+  }
+  .closing h2{font-size:clamp(30px,4vw,42px);margin-bottom:18px;}
+  .closing p{color:var(--muted);font-size:16px;line-height:1.7;max-width:540px;margin:0 auto 36px;}
+  .closing .cta-row{justify-content:center;}
+
+  footer{
+    border-top:1px solid var(--line-soft);
+    padding:48px 32px;
+  }
+  .footer-inner{
+    max-width:var(--max);
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+    color:var(--muted-2);
+    font-size:13px;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-visual{height:340px;order:-1;}
+    .grid-3{grid-template-columns:repeat(3,1fr);}
+    .vert-grid{grid-template-columns:1fr 1fr;}
+    .model-grid{grid-template-columns:1fr;}
+    .stat-band{grid-template-columns:1fr;}
+    .track-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+  }
+  @media (max-width:620px){
+    .wrap,.hero,section{padding-left:20px;padding-right:20px;}
+    .grid-3{grid-template-columns:1fr;}
+    .vert-grid{grid-template-columns:1fr;}
+    nav{padding:16px 20px;}
+    .hero{padding-top:160px;}
+    .ticker{gap:24px;}
+    .options-row{flex-direction:column;}
+    .managed-strip{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+  <script type="module" crossorigin src="./assets/index-CM_uQ_1E.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BsLjhpk6.css">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<!-- DotGrid interactive background -->
+<div id="dot-grid-root"></div>
+
+<div id="nav-root"></div>
+
+<div id="page-content">
+<!-- HERO -->
+<section class="hero">
+  <div id="dither-root"></div>
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">UAE · IoT Infrastructure · Built on Farm21</span>
+      <h1>One platform for every connected asset in the <em>Emirates.</em></h1>
+      <p class="lead">Tiotai unifies bespoke IoT hardware and legacy device ingestion into a single managed layer — giving UAE enterprises and municipal operators one dashboard instead of five vendors.</p>
+      <div class="cta-row">
+        <a href="#contact" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Request Investor Deck</a>
+        <a href="#solution" class="btn btn-ghost"><i class="fa-solid fa-diagram-project"></i> Explore the Platform</a>
+      </div>
+      <div class="ticker">
+        <div class="ticker-item"><span class="num mono">$17.48B</span><span class="label">UAE IoT Market, 2033</span></div>
+        <div class="ticker-item"><span class="num mono">32.3%</span><span class="label">Integration CAGR</span></div>
+        <div class="ticker-item"><span class="num mono">$346.5M</span><span class="label">UAE Platform Layer, 2030</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="track-card">
+        <svg viewBox="0 0 460 480" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#ff6b57"/>
+              <stop offset="100%" stop-color="#ff8569"/>
+            </linearGradient>
+            <linearGradient id="tealLine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#6fa392"/>
+              <stop offset="100%" stop-color="#8fbfae"/>
+            </linearGradient>
+          </defs>
+          <!-- grid dots -->
+          <g opacity="0.18">
+            <circle cx="40" cy="40" r="1.5" fill="#a89fc2"/>
+            <circle cx="420" cy="40" r="1.5" fill="#a89fc2"/>
+            <circle cx="40" cy="440" r="1.5" fill="#a89fc2"/>
+            <circle cx="420" cy="440" r="1.5" fill="#a89fc2"/>
+          </g>
+
+          <!-- Track 1: Build (coral) curve from top-left -->
+          <path d="M40,90 C150,90 150,210 230,210" fill="none" stroke="url(#goldLine)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="40" cy="90" r="6" fill="#ff8569"/>
+          <circle cx="120" cy="90" r="4" fill="#ff8569" opacity="0.7"/>
+          <circle cx="170" cy="150" r="4" fill="#ff8569" opacity="0.7"/>
+
+          <!-- Track 2: Connect (sage) curve from bottom-left -->
+          <path d="M40,330 C150,330 150,250 230,250" fill="none" stroke="url(#tealLine)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="40" cy="330" r="6" fill="#8fbfae"/>
+          <circle cx="120" cy="330" r="4" fill="#8fbfae" opacity="0.7"/>
+          <circle cx="170" cy="280" r="4" fill="#8fbfae" opacity="0.7"/>
+
+          <!-- merge node -->
+          <circle cx="230" cy="230" r="34" fill="#1d1828" stroke="#ff6b57" stroke-width="1.5"/>
+          <circle cx="230" cy="230" r="34" fill="none" stroke="#8fbfae" stroke-width="1" stroke-dasharray="2 4"/>
+          <text x="230" y="226" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#ece5da">TIOTAI</text>
+          <text x="230" y="240" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#a89fc2">PLATFORM</text>
+
+          <!-- output fan to right -->
+          <path d="M264,225 C320,200 360,180 410,150" fill="none" stroke="#ff6b57" stroke-width="1.4" opacity="0.55"/>
+          <path d="M264,230 C330,230 360,230 410,230" fill="none" stroke="#a89fc2" stroke-width="1.4" opacity="0.5"/>
+          <path d="M264,235 C320,260 360,290 410,320" fill="none" stroke="#8fbfae" stroke-width="1.4" opacity="0.55"/>
+          <circle cx="410" cy="150" r="3.5" fill="#ff6b57"/>
+          <circle cx="410" cy="230" r="3.5" fill="#a89fc2"/>
+          <circle cx="410" cy="320" r="3.5" fill="#8fbfae"/>
+
+          <text x="40" y="75" font-family="JetBrains Mono" font-size="11" fill="#ff8569">TRACK 1 — BUILD</text>
+          <text x="40" y="350" font-family="JetBrains Mono" font-size="11" fill="#8fbfae">TRACK 2 — CONNECT</text>
+          <text x="395" y="135" font-family="JetBrains Mono" font-size="9" fill="#a89fc2" text-anchor="end">Dashboard</text>
+          <text x="395" y="222" font-family="JetBrains Mono" font-size="9" fill="#a89fc2" text-anchor="end">Analytics</text>
+          <text x="395" y="335" font-family="JetBrains Mono" font-size="9" fill="#a89fc2" text-anchor="end">Alerts</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE DIVIDER -->
+<section id="marquee-divider">
+  <div id="curved-loop-root"></div>
+</section>
+
+<!-- USECASES -->
+<section id="usecases">
+  <div class="wrap">
+    <div class="usecases-header">
+      <span class="eyebrow">Deployments</span>
+      <h2>Unified telemetry across critical sectors.</h2>
+      <p>Tiotai standardizes hardware payloads, sensor nodes, and network gateways into clean workflows — replacing fragmented support contracts with a single operational view.</p>
+      <div class="usecase-features">
+        <div class="uf-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span><strong>No Hardware Lock-in:</strong> Connect what you already own or design bespoke sensors with us.</span>
+        </div>
+        <div class="uf-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span><strong>High Reliability:</strong> Built on industry-tested Farm21 telemetry protocols.</span>
+        </div>
+        <div class="uf-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span><strong>Operational Security:</strong> Local UAE ingestion with end-to-end payload encryption.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="usecases-gallery">
+    <div id="usecases-gallery-root"></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" class="alt-bg">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The Gap</span>
+      <h2>Fragmented sensors. Fragmented vendors. Fragmented risk.</h2>
+      <p>UAE operators across logistics, facilities, and urban infrastructure are deploying remote sensors faster than they can integrate them — leaving capital stuck in silos that don't talk to each other.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-layer-group"></i></div>
+        <h3>Siloed Systems</h3>
+        <p>Access control, environmental sensors, and fleet telemetry each run on separate vendors, schemas, and support contracts.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <h3>Integration Fatigue</h3>
+        <p>Disconnected interfaces create operational blind spots and steadily escalating maintenance overhead.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-user-gear"></i></div>
+        <h3>The Talent Gap</h3>
+        <p>Mid-market operators lack systems-engineering teams to source hardware and safely manage telemetry pipelines in-house.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:64px;">
+      <span class="eyebrow">Market Timing</span>
+      <h2 style="font-size:clamp(26px,3vw,34px);margin-bottom:8px;">Abu Dhabi sits at the center of a generational IoT build-out.</h2>
+    </div>
+    <div class="stat-band">
+      <div class="stat-tile">
+        <span class="big mono">$17.48B</span>
+        <span class="desc">Projected total UAE IoT market by 2033 — one of the fastest-digitalizing economies globally.</span>
+      </div>
+      <div class="stat-tile">
+        <span class="big mono">$346.5M</span>
+        <span class="desc">UAE platform-layer revenue forecast for 2030, the category Tiotai is built to capture.</span>
+      </div>
+      <div class="stat-tile">
+        <span class="big mono">32.3%</span>
+        <span class="desc">CAGR of the integration-services segment — software normalization, not hardware overhaul, is the growth engine.</span>
+      </div>
+    </div>
+    <p class="market-note">Grand View Research projects the integration-services category to reach $445.2 million by 2030 — confirming that the primary opportunity is unifying existing assets into a single interface, without forcing capital-intensive hardware replacement.</p>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The Platform</span>
+      <h2>Two tracks. One execution layer.</h2>
+      <p>Tiotai meets every client at their current level of digital maturity — building hardware from zero, or absorbing what they already own — and resolves both into a single managed operating layer.</p>
+    </div>
+    <div class="track-grid">
+      <div class="track-panel gold">
+        <span class="track-tag mono" style="color:var(--gold-bright);">TRACK 1</span>
+        <h3>Build — End-to-End Hardware &amp; Firmware</h3>
+        <p>For operations with zero existing infrastructure. Tiotai designs, sources, and commissions custom configurations — bespoke hardware, optimized embedded microcode, network validation, and full onboarding — built on mature blueprints adapted from Farm21 for reliability in severe physical environments.</p>
+        <div class="tag-row">
+          <span class="tag-pill">Custom Hardware</span>
+          <span class="tag-pill">Embedded Firmware</span>
+          <span class="tag-pill">Field-Tested via Farm21</span>
+        </div>
+      </div>
+      <div class="track-panel teal">
+        <span class="track-tag mono" style="color:var(--teal);">TRACK 2</span>
+        <h3>Connect — Multi-Protocol Middleware Ingestion</h3>
+        <p>For organizations with existing asset investments. A middleware gateway ingests and standardizes payloads across LoRaWAN &amp; LPWAN, cellular networks (4G/5G/NB-IoT), and WiFi/Ethernet — unifying every legacy system into one schema.</p>
+        <div class="tag-row">
+          <span class="tag-pill">LoRaWAN / LPWAN</span>
+          <span class="tag-pill">4G / 5G / NB-IoT</span>
+          <span class="tag-pill">WiFi &amp; Ethernet</span>
+        </div>
+      </div>
+    </div>
+    <div class="managed-strip">
+      <i class="fa-solid fa-shield-halved"></i>
+      <p><strong>Fully managed, end to end.</strong> Tiotai handles device configuration, continuous up-time health checks, remote OTA security updates, and automated alert management — so operations teams work exclusively with clean dashboards, not infrastructure.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- VERTICALS -->
+<section id="verticals" class="alt-bg">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Vertical Reach</span>
+      <h2>One platform, built for every sector Abu Dhabi is scaling.</h2>
+      <p>From sovereign infrastructure to private enterprise, the same platform layer applies natively across the UAE's highest-growth verticals.</p>
+    </div>
+    <div class="vert-grid">
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+        <span class="vert-cat">Platform Core</span>
+        <h4>GIS as a Service</h4>
+        <p>Location-based spatial insight across geographically distributed physical assets.</p>
+      </div>
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-temperature-half"></i></div>
+        <span class="vert-cat">Platform Core</span>
+        <h4>Environmental Telemetry</h4>
+        <p>Temperature, humidity, emissions, air quality and sound — structured into centralized dashboards.</p>
+      </div>
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-bolt"></i></div>
+        <span class="vert-cat">Sustainability</span>
+        <h4>Energy &amp; Demand Response</h4>
+        <p>Dynamic load optimization based on real-time occupancy and environmental factors.</p>
+      </div>
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-droplet"></i></div>
+        <span class="vert-cat">Sustainability</span>
+        <h4>Air &amp; Water Quality</h4>
+        <p>Continuous contaminant and emissions-compliance tracking across sites.</p>
+      </div>
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-traffic-light"></i></div>
+        <span class="vert-cat">Mobility</span>
+        <h4>Traffic &amp; Fleet Management</h4>
+        <p>Real-time coordination of city traffic flows and commercial vehicle fleets.</p>
+      </div>
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-square-parking"></i></div>
+        <span class="vert-cat">Mobility</span>
+        <h4>Smart Parking</h4>
+        <p>Live availability broadcasting that cuts congestion and search times.</p>
+      </div>
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-gears"></i></div>
+        <span class="vert-cat">Industrial</span>
+        <h4>Predictive Maintenance</h4>
+        <p>Edge sensors on vibration and thermal load to pre-empt mechanical failure.</p>
+      </div>
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-truck-fast"></i></div>
+        <span class="vert-cat">Industrial</span>
+        <h4>Supply Chain Visibility</h4>
+        <p>End-to-end telemetry across raw materials, warehousing, and goods-in-transit.</p>
+      </div>
+      <div class="vert-card">
+        <div class="vert-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <span class="vert-cat">Commercial</span>
+        <h4>Security &amp; Access Control</h4>
+        <p>Unified smart cameras, digital barriers, and credential scanning with live alerts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section id="model">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Business Model</span>
+      <h2>Dual revenue, built for near-term cash and long-term ARR.</h2>
+      <p>Project fees fund deployment and lower CAC today; recurring subscriptions compound into a high-margin, predictable base over time.</p>
+    </div>
+    <div class="model-grid">
+      <div class="model-card">
+        <h3>Solution Development Capital</h3>
+        <div class="range mono">AED 20K – 200K+</div>
+        <p class="sub">One-time, milestone-based engagement fees that cover upfront deployment cost and reduce customer acquisition cost.</p>
+      </div>
+      <div class="model-card">
+        <h3>Platform Subscriptions</h3>
+        <div class="range mono">AED 50 – 150 / mo</div>
+        <p class="sub">Recurring SaaS revenue priced per connected device — the structural foundation of Tiotai's predictable ARR base.</p>
+      </div>
+    </div>
+    <div class="options-row">
+      <div class="opt">
+        <span class="lab mono">OPTION A</span>
+        <p>Per Device / Month — linear pricing built for fleet-scale rollouts.</p>
+      </div>
+      <div class="opt">
+        <span class="lab mono">OPTION B</span>
+        <p>Per Site flat fee — minimizes contract friction for mid-market building clusters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIVE MATRIX -->
+<section id="matrix" class="alt-bg">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Positioning</span>
+      <h2>Not a vendor. The managed layer above the vendors.</h2>
+      <p>Tiotai is structured to complement, not compete with, regional telecoms and global cloud platforms — capturing the managed-operations layer none of them fully own.</p>
+    </div>
+    <div class="matrix-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>Tiotai</th>
+            <th>Telecoms (e&amp; / du)</th>
+            <th>Local Integrators</th>
+            <th>Global Cloud</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bespoke Hardware Build (Track 1)</td>
+            <td class="yes-strong">Yes</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Legacy Multi-Protocol Ingestion (Track 2)</td>
+            <td class="yes-strong">Yes</td>
+            <td>Partial</td>
+            <td>Partial</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Fully Managed Remote Operations</td>
+            <td class="yes-strong">Yes</td>
+            <td>No</td>
+            <td>Rarely</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Scalable Subscription Model (SaaS)</td>
+            <td class="yes-strong">Yes</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+<section class="closing" id="contact">
+  <div class="closing-card">
+    <span class="eyebrow" style="justify-content:center;">For Hub71 · VC · Sovereign Capital</span>
+    <h2>Built on proven IP. Ready to scale across the Emirates.</h2>
+    <p>Tiotai enters the market with field-ready architecture from Farm21, a dual revenue model, and a platform built for every IoT vertical Abu Dhabi is investing in.</p>
+    <div class="cta-row">
+      <a href="#" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Request Investor Deck</a>
+      <a href="#" class="btn btn-ghost"><i class="fa-solid fa-calendar"></i> Schedule a Briefing</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 Tiotai. United Arab Emirates.</span>
+    <span>Confidential — Prepared for institutional review.</span>
+  </div>
+</footer>
+
+</div>
+
+<!-- Dither background, real bundler build: see src/dither-mount.jsx -->
+<!-- CurvedLoop marquee divider: see src/curved-loop-mount.jsx -->
+<!-- Navigation, CardNav build: see src/card-nav-mount.jsx -->
+<!-- Usecases CardSwap build: see src/usecases-mount.jsx -->
+<!-- DotGrid interactive background: see src/dot-grid-mount.jsx -->
+
+</body>
+</html>

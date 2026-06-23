@@ -131,6 +131,7 @@
     padding:200px 32px 140px;
     z-index:1;
     overflow:hidden;
+    background:var(--ink);
   }
   #dither-root{
     position:absolute;
@@ -287,6 +288,83 @@
     line-height:1.7;
   }
   .alt-bg{background:linear-gradient(180deg,var(--navy) 0%, var(--ink) 100%);}
+
+  /* ---------- marquee divider (CurvedLoop) ---------- */
+  #marquee-divider{
+    padding:0;
+    overflow:hidden;
+  }
+  #curved-loop-root .curved-loop-jacket{
+    min-height:220px;
+  }
+  #curved-loop-root .curved-loop-svg{
+    fill:var(--ivory);
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:3.4rem;
+    letter-spacing:0.01em;
+  }
+  #curved-loop-root .curved-text{
+    fill:var(--ivory);
+  }
+  @media (max-width:620px){
+    #curved-loop-root .curved-loop-jacket{min-height:140px;}
+    #curved-loop-root .curved-loop-svg{font-size:1.8rem;}
+  }
+
+  /* ---------- usecases section ---------- */
+  #usecases {
+    padding-bottom: 0;
+  }
+  .usecases-header{
+    max-width:680px;
+    margin-bottom:60px;
+  }
+  .usecase-features{
+    display:flex;
+    flex-direction:row;
+    gap:32px;
+    margin-top:28px;
+    flex-wrap:wrap;
+  }
+  .uf-item{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    flex:1;
+    min-width:180px;
+  }
+  .uf-item i{
+    color:var(--teal);
+    margin-top:3px;
+    font-size:15px;
+    flex-shrink:0;
+  }
+  .uf-item span{
+    font-size:14.5px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+  .uf-item strong{color:var(--ivory);}
+  .usecases-gallery{
+    width:100%;
+    height:500px;
+    position:relative;
+    margin-top:20px;
+  }
+  #usecases-gallery-root{
+    width:100%;
+    height:100%;
+    position:absolute;
+    inset:0;
+  }
+  @media (max-width:980px){
+    .usecase-features{gap:20px;}
+    .usecases-gallery{height:380px;}
+  }
+  @media (max-width:620px){
+    .usecase-features{flex-direction:column; gap:14px;}
+    .usecases-gallery{height:300px;}
+  }
 
   /* ---------- problem cards ---------- */
   .grid-3{
@@ -537,7 +615,7 @@
   @media (max-width:980px){
     .hero-inner{grid-template-columns:1fr;}
     .hero-visual{height:340px;order:-1;}
-    .grid-3{grid-template-columns:1fr 1fr;}
+    .grid-3{grid-template-columns:repeat(3,1fr);}
     .vert-grid{grid-template-columns:1fr 1fr;}
     .model-grid{grid-template-columns:1fr;}
     .stat-band{grid-template-columns:1fr;}
@@ -560,20 +638,12 @@
 
 <div class="bg-grid"></div>
 
-<header>
-  <nav>
-    <div class="logo"><span class="dot"></span> Tiotai</div>
-    <div class="nav-links">
-      <a href="#problem">Opportunity</a>
-      <a href="#solution">Platform</a>
-      <a href="#verticals">Verticals</a>
-      <a href="#model">Business Model</a>
-      <a href="#matrix">Positioning</a>
-    </div>
-    <a href="#contact" class="nav-cta">Request Briefing</a>
-  </nav>
-</header>
+<!-- DotGrid interactive background -->
+<div id="dot-grid-root"></div>
 
+<div id="nav-root"></div>
+
+<div id="page-content">
 <!-- HERO -->
 <section class="hero">
   <div id="dither-root"></div>
@@ -647,6 +717,39 @@
         </svg>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- MARQUEE DIVIDER -->
+<section id="marquee-divider">
+  <div id="curved-loop-root"></div>
+</section>
+
+<!-- USECASES -->
+<section id="usecases">
+  <div class="wrap">
+    <div class="usecases-header">
+      <span class="eyebrow">Deployments</span>
+      <h2>Unified telemetry across critical sectors.</h2>
+      <p>Tiotai standardizes hardware payloads, sensor nodes, and network gateways into clean workflows — replacing fragmented support contracts with a single operational view.</p>
+      <div class="usecase-features">
+        <div class="uf-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span><strong>No Hardware Lock-in:</strong> Connect what you already own or design bespoke sensors with us.</span>
+        </div>
+        <div class="uf-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span><strong>High Reliability:</strong> Built on industry-tested Farm21 telemetry protocols.</span>
+        </div>
+        <div class="uf-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span><strong>Operational Security:</strong> Local UAE ingestion with end-to-end payload encryption.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="usecases-gallery">
+    <div id="usecases-gallery-root"></div>
   </div>
 </section>
 
@@ -734,6 +837,8 @@
     </div>
   </div>
 </section>
+
+
 
 <!-- VERTICALS -->
 <section id="verticals" class="alt-bg">
@@ -909,8 +1014,18 @@
   </div>
 </footer>
 
+</div>
+
 <!-- Dither background, real bundler build: see src/dither-mount.jsx -->
 <script type="module" src="/src/dither-mount.jsx"></script>
+<!-- CurvedLoop marquee divider: see src/curved-loop-mount.jsx -->
+<script type="module" src="/src/curved-loop-mount.jsx"></script>
+<!-- Navigation, CardNav build: see src/card-nav-mount.jsx -->
+<script type="module" src="/src/card-nav-mount.jsx"></script>
+<!-- Usecases CardSwap build: see src/usecases-mount.jsx -->
+<script type="module" src="/src/usecases-mount.jsx"></script>
+<!-- DotGrid interactive background: see src/dot-grid-mount.jsx -->
+<script type="module" src="/src/dot-grid-mount.jsx"></script>
 
 </body>
 </html>

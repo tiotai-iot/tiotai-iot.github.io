@@ -13,14 +13,24 @@ src/
   Dither.jsx             the component, untouched
   Dither.css             the component's own CSS, untouched
   dither-mount.jsx       mounts <Dither /> into #dither-root in the hero
+  CurvedLoop.jsx         the component, untouched
+  CurvedLoop.css         the component's own CSS, untouched
+  curved-loop-mount.jsx  mounts <CurvedLoop /> into #curved-loop-root
 package.json
 vite.config.js
 ```
 
-Everything outside the hero's `#dither-root` div is still plain HTML/CSS —
-there was no reason to rewrite the whole page as JSX just to get a real
-bundler under the Dither component. It's mounted the same way you'd mount
-any React "island" into a non-React page.
+Everything outside the React mount points (`#dither-root`, `#curved-loop-root`)
+is still plain HTML/CSS — there was no reason to rewrite the whole page as
+JSX just to get a real bundler under two components. They're mounted the
+same way you'd mount any React "island" into a non-React page.
+
+CurvedLoop sits in a new `#marquee-divider` section between **Solution**
+and **Verticals** as a brand-line breather between two dense sections.
+Its default CSS makes the jacket `100vh` tall (made for full-screen use);
+`index.html` overrides that with `#curved-loop-root`-scoped rules instead
+of editing `CurvedLoop.css` directly, so the component file stays exactly
+as shipped if you ever copy it into another project.
 
 ## Setup
 
