@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <style>
   :root{
     --ink:#15121c;
@@ -130,31 +129,6 @@
     position:relative;
     padding:200px 32px 140px;
     z-index:1;
-    overflow:hidden;
-  }
-  #dither-root{
-    position:absolute;
-    inset:0;
-    z-index:0;
-    opacity:0.55;
-  }
-  #dither-root canvas{
-    display:block;
-    width:100%!important;
-    height:100%!important;
-  }
-  .dither-container{
-    width:100%;
-    height:100%;
-    position:relative;
-  }
-  .hero::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    z-index:0;
-    background:linear-gradient(180deg, rgba(21,18,28,0.15) 0%, rgba(21,18,28,0.55) 60%, var(--ink) 100%);
-    pointer-events:none;
   }
   .hero-inner{
     max-width:var(--max);
@@ -163,8 +137,6 @@
     grid-template-columns:1.05fr 0.95fr;
     gap:60px;
     align-items:center;
-    position:relative;
-    z-index:2;
   }
   .eyebrow{
     display:inline-flex;
@@ -576,7 +548,6 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div id="dither-root"></div>
   <div class="hero-inner">
     <div>
       <span class="eyebrow">UAE · IoT Infrastructure · Built on Farm21</span>
@@ -908,9 +879,6 @@
     <span>Confidential — Prepared for institutional review.</span>
   </div>
 </footer>
-
-<!-- Dither background, real bundler build: see src/dither-mount.jsx -->
-<script type="module" src="/src/dither-mount.jsx"></script>
 
 </body>
 </html>
