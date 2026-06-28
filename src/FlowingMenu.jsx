@@ -31,15 +31,16 @@ function FlowingMenu({
   );
 }
 
-function MenuItem({ link, text, image, description, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor }) {
+function MenuItem({ link, text, image, description, icon, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor }) {
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
   const descRef = useRef(null);
   const animationRef = useRef(null);
   const [repetitions, setRepetitions] = useState(4);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const animationDefaults = { duration: 0.6, ease: 'expo.out' };
+  const animationDefaults = { duration: 0.6, ease: 'expo' };
 
   const findClosestEdge = (mouseX, mouseY, width, height) => {
     const topEdgeDist = distMetric(mouseX, mouseY, width / 2, 0);
@@ -104,6 +105,36 @@ function MenuItem({ link, text, image, description, speed, textColor, marqueeBgC
     };
   }, [text, image, repetitions, speed]);
 
+  // Click handler to toggle accordion
+  const handleClick = (e) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  };
+
+  // GSAP animation for opening/closing the description
+  useEffect(() => {
+    if (!descRef.current) return;
+    if (isOpen) {
+      gsap.to(descRef.current, {
+        height: 'auto',
+        opacity: 1,
+        marginTop: '16px',
+        paddingBottom: '32px',
+        duration: 0.5,
+        ease: 'power3.out'
+      });
+    } else {
+      gsap.to(descRef.current, {
+        height: 0,
+        opacity: 0,
+        marginTop: 0,
+        paddingBottom: 0,
+        duration: 0.4,
+        ease: 'power3.inOut'
+      });
+    }
+  }, [isOpen]);
+
   const handleMouseEnter = ev => {
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
@@ -111,24 +142,11 @@ function MenuItem({ link, text, image, description, speed, textColor, marqueeBgC
     const y = ev.clientY - rect.top;
     const edge = findClosestEdge(x, y, rect.width, rect.height);
 
-    const tl = gsap.timeline({ defaults: animationDefaults });
-    
-    // Marquee overlay animations
-    tl.set(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+    gsap
+      .timeline({ defaults: animationDefaults })
+      .set(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
       .set(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0)
       .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0);
-
-    // Expand description below
-    if (descRef.current) {
-      tl.to(descRef.current, {
-        height: 'auto',
-        opacity: 1,
-        marginTop: '16px',
-        paddingBottom: '24px',
-        duration: 0.5,
-        ease: 'power3.out'
-      }, 0);
-    }
   };
 
   const handleMouseLeave = ev => {
@@ -138,35 +156,28 @@ function MenuItem({ link, text, image, description, speed, textColor, marqueeBgC
     const y = ev.clientY - rect.top;
     const edge = findClosestEdge(x, y, rect.width, rect.height);
 
-    const tl = gsap.timeline({ defaults: animationDefaults });
-    
-    // Marquee overlay animations
-    tl.to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+    gsap
+      .timeline({ defaults: animationDefaults })
+      .to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
       .to(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0);
-
-    // Collapse description below
-    if (descRef.current) {
-      tl.to(descRef.current, {
-        height: 0,
-        opacity: 0,
-        marginTop: 0,
-        paddingBottom: 0,
-        duration: 0.4,
-        ease: 'power3.inOut'
-      }, 0);
-    }
   };
 
   return (
-    <div className="menu__item" ref={itemRef} style={{ borderColor }}>
+    <div
+      className={`menu__item ${isOpen ? 'is-open' : ''}`}
+      ref={itemRef}
+      style={{ borderColor }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <a
         className="menu__item-link"
         href={link}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
         style={{ color: textColor }}
       >
-        {text}
+        <span>{text}</span>
+        <i className={`fa-solid fa-chevron-down toggle-icon ${isOpen ? 'rotated' : ''}`}></i>
       </a>
       <div className="marquee" ref={marqueeRef} style={{ backgroundColor: marqueeBgColor }}>
         <div className="marquee__inner-wrap">
@@ -186,7 +197,44 @@ function MenuItem({ link, text, image, description, speed, textColor, marqueeBgC
           ref={descRef}
           style={{ height: 0, opacity: 0, overflow: 'hidden' }}
         >
-          <p>{description}</p>
+          <div className="desc-content">
+            <div className="desc-text-section">
+              {icon && <div className="desc-icon-wrap"><i className={`${icon} desc-icon`}></i></div>}
+              <p>{description}</p>
+            </div>
+            
+            {infographic && (
+              <div className="infographic-container">
+                <h4 className="info-title">{infographic.title}</h4>
+                <div className="info-layout">
+                  <div className="info-flow">
+                    {infographic.steps.map((step, sIdx) => (
+                      <div key={sIdx} className="info-step">
+                        <div className="step-circle">
+                          <i className={`fa-solid ${step.icon}`}></i>
+                        </div>
+                        <div className="step-meta">
+                          <span className="step-label">{step.label}</span>
+                          <span className="step-desc">{step.desc}</span>
+                        </div>
+                        {sIdx < infographic.steps.length - 1 && (
+                          <div className="step-arrow">
+                            <i className="fa-solid fa-chevron-right"></i>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  {infographic.metric && (
+                    <div className="info-metric">
+                      <span className="metric-val mono">{infographic.metric.value}</span>
+                      <span className="metric-label">{infographic.metric.label}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
