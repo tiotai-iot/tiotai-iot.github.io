@@ -31,7 +31,7 @@ function FlowingMenu({
   );
 }
 
-function MenuItem({ link, text, image, description, icon, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor }) {
+function MenuItem({ link, text, image, description, icon, infographic, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor }) {
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
@@ -199,7 +199,6 @@ function MenuItem({ link, text, image, description, icon, speed, textColor, marq
         >
           <div className="desc-content">
             <div className="desc-text-section">
-              {icon && <div className="desc-icon-wrap"><i className={`${icon} desc-icon`}></i></div>}
               <p>{description}</p>
             </div>
             
@@ -217,20 +216,9 @@ function MenuItem({ link, text, image, description, icon, speed, textColor, marq
                           <span className="step-label">{step.label}</span>
                           <span className="step-desc">{step.desc}</span>
                         </div>
-                        {sIdx < infographic.steps.length - 1 && (
-                          <div className="step-arrow">
-                            <i className="fa-solid fa-chevron-right"></i>
-                          </div>
-                        )}
                       </div>
                     ))}
                   </div>
-                  {infographic.metric && (
-                    <div className="info-metric">
-                      <span className="metric-val mono">{infographic.metric.value}</span>
-                      <span className="metric-label">{infographic.metric.label}</span>
-                    </div>
-                  )}
                 </div>
               </div>
             )}
