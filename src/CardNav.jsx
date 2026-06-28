@@ -204,15 +204,6 @@ const CardNav = ({
               <div className="logo"><span class="dot"></span> Tiotai</div>
             )}
           </div>
-
-          <button
-            type="button"
-            className="card-nav-cta-button"
-            style={{ background: buttonBgColor, color: buttonTextColor }}
-            onClick={onCtaClick}
-          >
-            Request Briefing
-          </button>
         </div>
 
         <div className="card-nav-content" aria-hidden={!isExpanded}>

@@ -4,7 +4,7 @@ import FlowingMenu from './FlowingMenu.jsx';
 const items = [
   {
     link: '#',
-    text: 'Tiotai GATE — Smart Access',
+    text: 'Tiotai GATE for Smart Access',
     image: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=800&q=80',
     description: 'Cloud-based gate/door access issuing time-bound digital codes for contractors, delivery personnel, and visitors, alongside resident smart-lock control in one app, with every entry/exit logged per unit.',
     infographic: {
@@ -19,7 +19,7 @@ const items = [
   },
   {
     link: '#',
-    text: 'Tiotai POOL — Drowning Prevention',
+    text: 'Tiotai POOL for Drowning Prevention',
     image: 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=800&q=80',
     description: 'Underwater motion/sonar sensors plus surface cameras to detect submersion or unusual stillness, alerting facilities staff and registered parents/guardians in real time — designed for community-wide deployment from a single console.',
     infographic: {
@@ -34,8 +34,8 @@ const items = [
   },
   {
     link: '#',
-    text: 'Tiotai GREEN — Irrigation Automation',
-    image: 'https://images.unsplash.com/photo-1463171359979-300c4642e49c?w=800&q=80',
+    text: 'Tiotai GREEN for Irrigation Automation',
+    image: 'https://media.istockphoto.com/id/1947185968/photo/herb-wall-plant-wall-natural-green-wallpaper-and-background-nature-wall-nature-background-of.jpg?s=612x612&w=0&k=20&c=7yC722HyhNt4VzwaxzsXCGt2zCKPM2y2DPRtGlrP9_A=',
     description: 'Soil-moisture probes linked to irrigation valves and local weather data, automatically skipping cycles during rain and protecting pumps from low-supply damage.',
     infographic: {
       title: 'Adaptive Irrigation Engine',
@@ -49,7 +49,7 @@ const items = [
   },
   {
     link: '#',
-    text: 'Tiotai CIVIC — Municipal Monitoring',
+    text: 'Tiotai CIVIC for Municipal Monitoring',
     image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&q=80',
     description: 'Fill-level sensors on public waste bins, ambient air-quality monitors, and flow/level sensors on water infrastructure feed into a single government-operated console, optimizing waste collection routes and auto-generating compliance logs.',
     infographic: {
@@ -64,7 +64,7 @@ const items = [
   },
   {
     link: '#',
-    text: 'Tiotai CAMPUS — Corporate Energy',
+    text: 'Tiotai CAMPUS for Corporate Energy',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80',
     description: 'Occupancy sensors and HVAC/BMS integration let the AI Engine pre-cool or pre-heat zones based on actual occupancy. Unifies access control across all buildings into one credential.',
     infographic: {

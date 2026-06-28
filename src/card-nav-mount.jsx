@@ -34,6 +34,7 @@ const items = [
 const root = createRoot(document.getElementById('nav-root'));
 root.render(
   <CardNav
+    logo="tiotai.png"
     items={items}
     baseColor="rgba(7, 11, 20, 0.72)"
     menuColor="#ece5da"

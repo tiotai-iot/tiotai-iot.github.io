@@ -90,6 +90,16 @@
   color: var(--ivory);
 }
 
+.logo-container img.logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .logo-container .logo .dot {
   width: 9px;
   height: 9px;

@@ -313,7 +313,13 @@
 
   /* ---------- usecases section ---------- */
   #usecases {
-    padding: 120px 0 0;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-top: 120px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0;
     overflow: visible;
   }
   .usecases-header{
@@ -322,16 +328,18 @@
     padding: 0 32px;
   }
   .usecases-gallery{
-    width:100%;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height:auto;
-    position:relative;
     margin-top:20px;
     overflow: visible;
   }
   #usecases-gallery-root{
-    width:100%;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height:auto;
-    position:relative;
     overflow: visible;
   }
 
@@ -342,13 +350,20 @@
     gap:24px;
   }
   .card{
-    background:var(--navy-card);
-    border:1px solid var(--line-soft);
-    border-radius:18px;
-    padding:32px 28px;
-    transition:border-color .25s, transform .25s;
+    background: linear-gradient(145deg, rgba(31, 33, 42, 0.7) 0%, rgba(21, 18, 28, 0.4) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
-  .card:hover{border-color:var(--line);transform:translateY(-4px);}
+  .card:hover{
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
   .card .icon{
     width:44px;height:44px;
     border-radius:12px;
@@ -452,10 +467,19 @@
     gap:20px;
   }
   .vert-card{
-    background:var(--navy-2);
-    border:1px solid var(--line-soft);
-    border-radius:16px;
-    padding:26px;
+    background: linear-gradient(145deg, rgba(31, 33, 42, 0.7) 0%, rgba(21, 18, 28, 0.4) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .vert-card:hover{
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   .vert-cat{
     font-family:'JetBrains Mono',monospace;
@@ -601,9 +625,85 @@
     .options-row{flex-direction:column;}
     .managed-strip{flex-direction:column;align-items:flex-start;}
   }
+  /* ---------- mcp chat ---------- */
+  .mcp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 960px) {
+    .mcp-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .mcp-copy h2 { font-size: clamp(32px, 4vw, 42px); margin-bottom: 24px; }
+  .mcp-copy p { color: var(--muted); font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+  
+  .chat-window {
+    background: linear-gradient(145deg, rgba(31, 33, 42, 0.8) 0%, rgba(21, 18, 28, 0.6) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .chat-header {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ivory);
+  }
+  .chat-header i { color: var(--teal); }
+  
+  .chat-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .chat-msg { display: flex; flex-direction: column; max-width: 85%; }
+  .chat-msg.user { align-self: flex-end; }
+  .chat-msg.ai { align-self: flex-start; }
+  
+  .chat-bubble {
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .chat-msg.user .chat-bubble {
+    background: rgba(255, 107, 87, 0.15);
+    border: 1px solid rgba(255, 107, 87, 0.3);
+    color: var(--ivory);
+    border-bottom-right-radius: 4px;
+  }
+  .chat-msg.ai .chat-bubble {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--muted);
+    border-bottom-left-radius: 4px;
+  }
+  .chat-tool-call {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--teal);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chat-tool-call i { font-size: 10px; }
+
 </style>
-  <script type="module" crossorigin src="./assets/index-B0ZqFhra.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DB6ZKuIx.css">
+  <script type="module" crossorigin src="./assets/index-das_Gwkg.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-D1pL63-C.css">
 </head>
 <body>
 
@@ -812,6 +912,42 @@
   </div>
 </section>
 
+<!-- MCP EXPLAINER -->
+<section id="mcp-explainer">
+  <div class="wrap">
+    <div class="mcp-grid">
+      <div class="mcp-copy">
+        <span class="eyebrow">The Universal Bridge</span>
+        <h2>What is MCP, really?</h2>
+        <p>Currently, every smart device speaks its own language. If you want to check a water valve and pause a pump, you need to open two different apps or build a costly custom integration.</p>
+        <p>The <strong>Model Context Protocol (MCP)</strong> changes this. It acts as a universal bridge that translates the language of physical hardware into a standard format that modern AI models understand.</p>
+        <p>In simple terms: Instead of <em>you</em> clicking buttons on a dashboard, you can simply type a request to an AI. The AI securely uses MCP "tools" to check sensor data and trigger physical actions instantly.</p>
+      </div>
+      <div class="mcp-chat">
+        <div class="chat-window">
+          <div class="chat-header">
+            <i class="fa-solid fa-microchip"></i> Tiotai Agent Console
+          </div>
+          <div class="chat-body">
+            <div class="chat-msg user">
+              <div class="chat-bubble">
+                The humidity in Villa 42's garden is very high, but a watering cycle is scheduled in 10 minutes. Should we run it?
+              </div>
+            </div>
+            <div class="chat-msg ai">
+              <div class="chat-tool-call"><i class="fa-solid fa-terminal"></i> Tool used: fetch_sensor_data(location="Villa 42")</div>
+              <div class="chat-tool-call"><i class="fa-solid fa-terminal"></i> Tool used: fetch_weather_forecast(location="Dubai")</div>
+              <div class="chat-bubble">
+                I checked the data. The soil moisture at Villa 42 is already at 85% and there is a 90% chance of rain in the next hour. I have automatically paused the upcoming watering cycle to prevent overwatering and save resources.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FIRST VERTICAL FOCUS: PROPTECH / VILLA COMMUNITIES -->
 <section id="verticals" class="alt-bg">
   <div class="wrap">
@@ -893,16 +1029,20 @@
           <tr>
             <th>Capability</th>
             <th>Tiotai</th>
-            <th>Telecoms (e&amp; / du)</th>
             <th>Local Integrators</th>
             <th>Global Cloud</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>Native MCP (Model Context Protocol) API</td>
+            <td class="yes-strong">Yes (Native)</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
             <td>Bespoke Hardware Build (Track 1)</td>
             <td class="yes-strong">Yes</td>
-            <td>No</td>
             <td>Yes</td>
             <td>No</td>
           </tr>
@@ -910,20 +1050,17 @@
             <td>Legacy Multi-Protocol Ingestion (Track 2)</td>
             <td class="yes-strong">Yes</td>
             <td>Partial</td>
-            <td>Partial</td>
             <td>Yes</td>
           </tr>
           <tr>
             <td>Fully Managed Remote Operations</td>
             <td class="yes-strong">Yes</td>
-            <td>No</td>
             <td>Rarely</td>
             <td>No</td>
           </tr>
           <tr>
             <td>Scalable Subscription Model (SaaS)</td>
             <td class="yes-strong">Yes</td>
-            <td>No</td>
             <td>No</td>
             <td>Yes</td>
           </tr>
@@ -941,14 +1078,17 @@
     <p>Tiotai is validating early concepts with visionary partners in the UAE. Partner with us during our idea-stage validation to shape the infrastructure of tomorrow.</p>
     <div class="cta-row">
       <a href="#" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Request Pitch Deck</a>
-      <a href="#" class="btn btn-ghost"><i class="fa-solid fa-calendar"></i> Partner with Us</a>
+      <a href="mailto:johansanseb@gmail.com" class="btn btn-ghost"><i class="fa-solid fa-envelope"></i> Partner with Us</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-inner">
-    <span>© 2026 Tiotai. United Arab Emirates.</span>
+  <div class="footer-inner" style="align-items: center;">
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+      <img src="./assets/tiotai-CTVSdWKx.png" alt="Tiotai Logo" style="height: 42px; width: auto; mix-blend-mode: screen; background: transparent; border: none; box-shadow: none;" />
+      <span>© 2026 Tiotai. United Arab Emirates.</span>
+    </div>
     <span>Confidential — Prepared for institutional review.</span>
   </div>
 </footer>
