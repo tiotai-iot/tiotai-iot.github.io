@@ -26,7 +26,7 @@ const items = [
     bgColor: "#1b1828",
     textColor: "#ece5da",
     links: [
-      { label: "Request Briefing", href: "#contact", ariaLabel: "Request Briefing" }
+      { label: "Request Pitch Deck", href: "mailto:johansanseb@gmail.com?subject=Request%20for%20Tiotai%20Pitch%20Deck", ariaLabel: "Request Pitch Deck" }
     ]
   }
 ];
