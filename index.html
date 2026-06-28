@@ -808,6 +808,54 @@
   </div>
 </section>
 
+<!-- MCP EXPLAINER -->
+<section id="mcp-explainer">
+  <div class="wrap">
+    <div class="mcp-grid">
+      <div class="mcp-copy">
+        <span class="eyebrow">The Universal Bridge</span>
+        <h2>What is MCP, really?</h2>
+        <p>Currently, every smart device speaks its own language. If you want to check a water valve and pause a pump, you need to open two different apps or build a costly custom integration.</p>
+        <p>The <strong>Model Context Protocol (MCP)</strong> changes this. It acts as a universal bridge that translates the language of physical hardware into a standard format that modern AI models understand.</p>
+        <p>In simple terms: Instead of <em>you</em> clicking buttons on a dashboard, you can simply type a request to an AI. The AI securely uses MCP "tools" to check sensor data and trigger physical actions instantly.</p>
+      </div>
+      <div class="mcp-chat">
+        <div class="chat-window">
+          <div class="chat-header">
+            <i class="fa-solid fa-microchip"></i> Tiotai Agent Console
+          </div>
+          <div class="chat-body">
+            <div class="chat-msg user">
+              <div class="chat-bubble">
+                Is it hotter in my bedroom right now than it usually is around this time?
+              </div>
+            </div>
+            <div class="chat-msg ai">
+              <div class="chat-tool-call"><i class="fa-solid fa-terminal"></i> Tool used: query_sensor(room="Master Bedroom", metric="temperature")</div>
+              <div class="chat-tool-call"><i class="fa-solid fa-terminal"></i> Tool used: fetch_history(room="Master Bedroom", timeframe="past_30_days_at_20:00")</div>
+              <div class="chat-bubble">
+                Yes, it is currently 25.5°C in your bedroom, which is 2.5°C higher than your 30-day average for this time. Would you like me to cool it down?
+              </div>
+            </div>
+            <div class="chat-msg user">
+              <div class="chat-bubble">
+                Yes, drop it to my usual temp and check if the AC filter needs replacing soon.
+              </div>
+            </div>
+            <div class="chat-msg ai">
+              <div class="chat-tool-call"><i class="fa-solid fa-terminal"></i> Tool used: set_thermostat(room="Master Bedroom", target="23.0°C")</div>
+              <div class="chat-tool-call"><i class="fa-solid fa-terminal"></i> Tool used: run_diagnostics(device="HVAC_Unit_Master")</div>
+              <div class="chat-bubble">
+                I've set the thermostat to 23.0°C. I also ran diagnostics—your filter efficiency is at 92%, so it's perfectly fine. I will monitor the cooldown rate.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PROBLEM -->
 <section id="problem" class="alt-bg">
   <div class="wrap">
@@ -910,41 +958,6 @@
   </div>
 </section>
 
-<!-- MCP EXPLAINER -->
-<section id="mcp-explainer">
-  <div class="wrap">
-    <div class="mcp-grid">
-      <div class="mcp-copy">
-        <span class="eyebrow">The Universal Bridge</span>
-        <h2>What is MCP, really?</h2>
-        <p>Currently, every smart device speaks its own language. If you want to check a water valve and pause a pump, you need to open two different apps or build a costly custom integration.</p>
-        <p>The <strong>Model Context Protocol (MCP)</strong> changes this. It acts as a universal bridge that translates the language of physical hardware into a standard format that modern AI models understand.</p>
-        <p>In simple terms: Instead of <em>you</em> clicking buttons on a dashboard, you can simply type a request to an AI. The AI securely uses MCP "tools" to check sensor data and trigger physical actions instantly.</p>
-      </div>
-      <div class="mcp-chat">
-        <div class="chat-window">
-          <div class="chat-header">
-            <i class="fa-solid fa-microchip"></i> Tiotai Agent Console
-          </div>
-          <div class="chat-body">
-            <div class="chat-msg user">
-              <div class="chat-bubble">
-                The humidity in Villa 42's garden is very high, but a watering cycle is scheduled in 10 minutes. Should we run it?
-              </div>
-            </div>
-            <div class="chat-msg ai">
-              <div class="chat-tool-call"><i class="fa-solid fa-terminal"></i> Tool used: fetch_sensor_data(location="Villa 42")</div>
-              <div class="chat-tool-call"><i class="fa-solid fa-terminal"></i> Tool used: fetch_weather_forecast(location="Dubai")</div>
-              <div class="chat-bubble">
-                I checked the data. The soil moisture at Villa 42 is already at 85% and there is a 90% chance of rain in the next hour. I have automatically paused the upcoming watering cycle to prevent overwatering and save resources.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- FIRST VERTICAL FOCUS: PROPTECH / VILLA COMMUNITIES -->
 <section id="verticals" class="alt-bg">
