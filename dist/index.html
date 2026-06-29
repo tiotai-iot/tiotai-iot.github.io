@@ -617,14 +617,76 @@
     .nav-links{display:none;}
   }
   @media (max-width:620px){
-    .wrap,.hero,section{padding-left:20px;padding-right:20px;}
-    .grid-3{grid-template-columns:1fr;}
-    .vert-grid{grid-template-columns:1fr;}
-    nav{padding:16px 20px;}
-    .hero{padding-top:160px;}
-    .ticker{gap:24px;}
-    .options-row{flex-direction:column;}
-    .managed-strip{flex-direction:column;align-items:flex-start;}
+    /* global spacing */
+    .wrap, .hero, section { padding-left: 16px; padding-right: 16px; }
+    section { padding-top: 64px; padding-bottom: 64px; }
+    #usecases { padding-top: 64px !important; }
+    .hero { padding-top: 100px; padding-bottom: 64px; }
+    .closing { padding: 64px 16px; }
+
+    /* hide hero SVG diagram on phones — it's too dense */
+    .hero-visual { display: none; }
+
+    /* typography */
+    .hero h1 { font-size: clamp(28px, 7vw, 40px); margin-bottom: 18px; }
+    .hero p.lead { font-size: 15px; line-height: 1.6; margin-bottom: 28px; }
+    .eyebrow { font-size: 11px; margin-bottom: 18px; }
+    .section-head h2 { font-size: clamp(24px, 5.5vw, 32px); }
+    .section-head p { font-size: 14.5px; }
+    .section-head { margin-bottom: 36px; }
+
+    /* grids go single-column */
+    .grid-3, .vert-grid, .model-grid, .track-grid { grid-template-columns: 1fr; }
+    .stat-band { grid-template-columns: 1fr; }
+    nav { padding: 14px 16px; }
+
+    /* ticker row */
+    .ticker { gap: 20px; flex-wrap: wrap; padding-top: 20px; }
+    .ticker-item .num { font-size: 20px; }
+
+    /* buttons stack full-width */
+    .cta-row { flex-direction: column; gap: 10px; width: 100%; margin-bottom: 32px; }
+    .cta-row .btn { width: 100%; justify-content: center; padding: 14px 20px; font-size: 14px; }
+
+    /* cards & panels */
+    .card, .vert-card, .model-card, .track-panel, .stat-tile, .opt { padding: 20px; }
+    .closing-card { padding: 32px 20px; }
+    .track-panel h3 { font-size: 20px; }
+    .track-panel p { font-size: 14px; }
+    .card h3 { font-size: 16px; }
+    .card p, .vert-card p { font-size: 13.5px; }
+    .model-card .range { font-size: 22px; }
+
+    /* managed strip */
+    .options-row, .managed-strip { flex-direction: column; align-items: flex-start; }
+    .managed-strip { padding: 20px; gap: 16px; }
+    .managed-strip p { font-size: 13.5px; }
+
+    /* competitive matrix — make table scroll nicely */
+    table { min-width: 520px; }
+    thead th { padding: 14px 12px; font-size: 10px; }
+    tbody td { padding: 12px; font-size: 13px; }
+
+    /* mcp chat */
+    .mcp-grid { gap: 32px; }
+    .mcp-copy h2 { font-size: clamp(24px, 5.5vw, 32px); }
+    .mcp-copy p { font-size: 15px; margin-bottom: 16px; }
+    .chat-body { padding: 14px; gap: 16px; }
+    .chat-msg { max-width: 92%; }
+    .chat-bubble { font-size: 13px; padding: 11px 13px; }
+    .chat-header { font-size: 11px; padding: 12px 14px; }
+    .chat-tool-call { font-size: 10.5px; gap: 6px; }
+
+    /* closing CTA */
+    .closing h2 { font-size: clamp(24px, 5.5vw, 32px); }
+    .closing p { font-size: 14.5px; margin-bottom: 28px; }
+
+    /* footer */
+    footer { padding: 32px 16px; }
+    .footer-inner { font-size: 12px; flex-direction: column; gap: 12px; }
+
+    /* usecases header */
+    .usecases-header { padding: 0 16px; margin-bottom: 40px; }
   }
   /* ---------- mcp chat ---------- */
   .mcp-grid {
@@ -703,8 +765,8 @@
   .chat-tool-call i { font-size: 10px; }
 
 </style>
-  <script type="module" crossorigin src="./assets/index-C9UHvK7v.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-CPxKWdfL.css">
+  <script type="module" crossorigin src="./assets/index-CHn-U5fE.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-3evyFff9.css">
 </head>
 <body>
 
