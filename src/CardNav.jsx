@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import './CardNav.css';
 
@@ -31,13 +31,32 @@ const CardNav = ({
   menuColor,
   buttonBgColor,
   buttonTextColor,
-  onCtaClick
+  onCtaClick,
+  viewMode: initialViewMode = 'human',
+  onViewModeChange
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [viewMode, setViewMode] = useState(initialViewMode);
   const navRef = useRef(null);
   const cardsRef = useRef([]);
   const tlRef = useRef(null);
+
+  const handleModeToggle = (mode) => {
+    setViewMode(mode);
+    localStorage.setItem('tiotai-view-mode', mode);
+    if (onViewModeChange) onViewModeChange(mode);
+    window.dispatchEvent(new CustomEvent('tiotai-view-mode', { detail: { mode } }));
+  };
+
+  useEffect(() => {
+    const saved = localStorage.getItem('tiotai-view-mode');
+    if (saved && (saved === 'human' || saved === 'agent')) {
+      setViewMode(saved);
+      if (onViewModeChange) onViewModeChange(saved);
+      window.dispatchEvent(new CustomEvent('tiotai-view-mode', { detail: { mode: saved } }));
+    }
+  }, []);
 
   const calculateHeight = () => {
     const navEl = navRef.current;
@@ -203,6 +222,25 @@ const CardNav = ({
             ) : (
               <div className="logo"><span class="dot"></span> Tiotai</div>
             )}
+          </div>
+
+          <div className="mode-switcher">
+            <button
+              className={`mode-btn ${viewMode === 'human' ? 'active' : ''}`}
+              onClick={() => handleModeToggle('human')}
+              aria-label="Switch to human website view"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>
+              Website
+            </button>
+            <button
+              className={`mode-btn ${viewMode === 'agent' ? 'active' : ''}`}
+              onClick={() => handleModeToggle('agent')}
+              aria-label="Switch to AI agent optimized view"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><circle cx="7" cy="16" r="1" fill="currentColor"/><circle cx="17" cy="16" r="1" fill="currentColor"/></svg>
+              Agent
+            </button>
           </div>
         </div>
 
