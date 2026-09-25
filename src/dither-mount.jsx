@@ -1,13 +1,13 @@
 import { createRoot } from 'react-dom/client';
 import Dither from './Dither.jsx';
 
-// Wave color matches the site's coral accent (#ff6b57 → 1, 0.42, 0.34),
+// Wave color matches the site's blue accent (#4499f3 → 0.267, 0.6, 0.953),
 // kept subtle (low colorNum, slow speed) so it reads as ambient texture,
 // not a distraction behind the headline.
 const root = createRoot(document.getElementById('dither-root'));
 root.render(
   <Dither
-    waveColor={[1.0, 0.42, 0.34]}
+    waveColor={[0.267, 0.6, 0.953]}
     disableAnimation={false}
     enableMouseInteraction={true}
     mouseRadius={0.3}
