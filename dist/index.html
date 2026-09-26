@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiotai: AI-Native IoT Platform for UAE PropTech</title>
+<title>Tiotai: AI-Native IoT Infrastructure — Incubated under CWRDM HYDRONIS</title>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +16,10 @@
     --navy:#1d1828;
     --navy-2:#241f33;
     --navy-card:#281f3a;
-    --line:rgba(255,133,105,0.18);
+    --line:rgba(68,153,243,0.18);
     --line-soft:rgba(243,239,233,0.08);
-    --gold:#ff6b57;
-    --gold-bright:#ff8569;
+    --gold:#4499f3;
+    --gold-bright:#66b0f5;
     --teal:#8fbfae;
     --sand:#ece5da;
     --ivory:#f3efe9;
@@ -104,7 +104,7 @@
   .logo .dot{
     width:9px;height:9px;border-radius:50%;
     background:var(--gold);
-    box-shadow:0 0 14px 2px rgba(255,107,87,0.5);
+    box-shadow:0 0 14px 2px rgba(68,153,243,0.5);
   }
   .nav-links{
     display:flex;
@@ -218,10 +218,10 @@
   }
   .btn-primary{
     background:linear-gradient(135deg,var(--gold-bright),var(--gold));
-    color:#1b1304;
-    box-shadow:0 8px 30px -8px rgba(255,107,87,0.35);
+    color:#fff;
+    box-shadow:0 8px 30px -8px rgba(68,153,243,0.35);
   }
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px -8px rgba(255,107,87,0.5);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px -8px rgba(68,153,243,0.5);}
   .btn-ghost{
     border:1px solid var(--line-soft);
     color:var(--ivory);
@@ -368,7 +368,7 @@
   .card .icon{
     width:44px;height:44px;
     border-radius:12px;
-    background:rgba(255,107,87,0.12);
+    background:rgba(68,153,243,0.12);
     color:var(--gold-bright);
     display:flex;align-items:center;justify-content:center;
     font-size:18px;
@@ -449,7 +449,7 @@
 
   .managed-strip{
     margin-top:28px;
-    background:linear-gradient(120deg,rgba(143,191,174,0.10),rgba(255,107,87,0.08));
+    background:linear-gradient(120deg,rgba(143,191,174,0.10),rgba(68,153,243,0.08));
     border:1px solid var(--line-soft);
     border-radius:18px;
     padding:28px 36px;
@@ -494,7 +494,7 @@
   .vert-card .vert-icon{
     width:38px;height:38px;
     border-radius:10px;
-    background:rgba(255,107,87,0.12);
+    background:rgba(68,153,243,0.12);
     color:var(--gold-bright);
     display:flex;align-items:center;justify-content:center;
     font-size:15px;
@@ -583,7 +583,7 @@
     margin:0 auto;
     padding:64px 48px;
     border-radius:28px;
-    background:radial-gradient(circle at 30% 0%, rgba(255,107,87,0.16), transparent 60%), var(--navy-card);
+    background:radial-gradient(circle at 30% 0%, rgba(68,153,243,0.16), transparent 60%), var(--navy-card);
     border:1px solid var(--line);
   }
   .closing h2{font-size:clamp(30px,4vw,42px);margin-bottom:18px;}
@@ -764,9 +764,321 @@
   }
   .chat-tool-call i { font-size: 10px; }
 
+  /* ---------- incubation announcement ---------- */
+  .incubation-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, rgba(68, 153, 243, 0.08), rgba(143, 191, 174, 0.06));
+    border: 1px solid rgba(68, 153, 243, 0.2);
+    border-radius: 100px;
+    margin-bottom: 28px;
+    animation: badge-glow 4s ease-in-out infinite;
+    cursor: default;
+    transition: border-color 0.3s;
+  }
+  .incubation-badge:hover {
+    border-color: rgba(68, 153, 243, 0.4);
+  }
+  @keyframes badge-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(68, 153, 243, 0); }
+    50% { box-shadow: 0 0 20px -6px rgba(68, 153, 243, 0.2); }
+  }
+  .incubation-badge .badge-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px 1px rgba(143, 191, 174, 0.5);
+    animation: dot-pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+  .incubation-badge .badge-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .incubation-badge .badge-text strong {
+    color: var(--ivory);
+    font-weight: 600;
+  }
+
+  .incubation-card {
+    margin-top: 48px;
+    background: linear-gradient(145deg, rgba(31, 33, 42, 0.7) 0%, rgba(21, 18, 28, 0.4) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(68, 153, 243, 0.15);
+    border-radius: 20px;
+    padding: 36px 36px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 680px;
+  }
+  .incubation-card .inc-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(143, 191, 174, 0.12);
+    color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .incubation-card .inc-body h4 {
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: var(--ivory);
+  }
+  .incubation-card .inc-body p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .incubation-card .inc-body p strong {
+    color: var(--gold-bright);
+  }
+
+  @media (max-width: 620px) {
+    .incubation-badge { padding: 8px 14px; gap: 8px; }
+    .incubation-badge .badge-text { font-size: 10px; }
+    .incubation-card { flex-direction: column; padding: 24px 20px; gap: 14px; }
+  }
+
+  /* ---------- agent view ---------- */
+  #agent-content {
+    display: none;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 120px 32px 80px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #agent-content.agent-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .agent-wrap {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .agent-header {
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .agent-header .agent-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    margin-bottom: 20px;
+    padding: 6px 14px;
+    background: rgba(143, 191, 174, 0.08);
+    border: 1px solid rgba(143, 191, 174, 0.15);
+    border-radius: 6px;
+  }
+  .agent-header h1 {
+    font-size: clamp(28px, 3.5vw, 40px);
+    margin-bottom: 12px;
+  }
+  .agent-header h1 em {
+    font-style: normal;
+    color: var(--gold-bright);
+  }
+  .agent-header .agent-summary {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  /* agent sections */
+  .agent-section {
+    margin-bottom: 48px;
+    padding: 28px 32px;
+    background: linear-gradient(145deg, rgba(31, 33, 42, 0.5) 0%, rgba(21, 18, 28, 0.3) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+  }
+  .agent-section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold-bright);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .agent-section-label::before {
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--gold-bright);
+    border-radius: 50%;
+  }
+  .agent-section h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .agent-section p {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+  .agent-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* fact grid inside agent sections */
+  .agent-facts {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0;
+    font-size: 14px;
+  }
+  .agent-facts dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted-2);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    letter-spacing: 0.02em;
+  }
+  .agent-facts dd {
+    color: var(--ivory);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .agent-facts dt:last-of-type,
+  .agent-facts dd:last-of-type {
+    border-bottom: none;
+  }
+
+  /* relationship triples */
+  .agent-triples {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .agent-triples li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .agent-triples li:last-child {
+    border-bottom: none;
+  }
+  .agent-triples .triple-subject {
+    color: var(--ivory);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .agent-triples .triple-predicate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-bright);
+    padding: 2px 8px;
+    background: rgba(68, 153, 243, 0.08);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .agent-triples .triple-object {
+    color: var(--sand);
+  }
+
+  /* agent tag list */
+  .agent-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .agent-tags span {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line-soft);
+    color: var(--sand);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .agent-status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .agent-status-card {
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+  }
+  .agent-status-card .status-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .agent-status-card .status-value {
+    font-size: 15px;
+    color: var(--ivory);
+    font-weight: 600;
+  }
+
+  .agent-footer {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line-soft);
+    text-align: center;
+  }
+  .agent-footer p {
+    font-size: 13px;
+    color: var(--muted-2);
+  }
+  .agent-footer a {
+    color: var(--gold-bright);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  @media (max-width: 620px) {
+    #agent-content { padding: 100px 16px 60px; }
+    .agent-section { padding: 20px; }
+    .agent-facts { grid-template-columns: 1fr; }
+    .agent-facts dt { padding-bottom: 2px; border-bottom: none; }
+    .agent-facts dd { padding-top: 0; }
+    .agent-status-grid { grid-template-columns: 1fr; }
+    .agent-triples li { flex-wrap: wrap; }
+  }
+
 </style>
-  <script type="module" crossorigin src="./assets/index-CHn-U5fE.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-3evyFff9.css">
+  <script type="module" crossorigin src="./assets/index-X1TCVn2R.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Bi_B7XwZ.css">
 </head>
 <body>
 
@@ -783,15 +1095,15 @@
   <div id="dither-root"></div>
   <div class="hero-inner">
     <div>
-      <span class="eyebrow">UAE · PropTech &amp; AI-Native IoT</span>
-      <h1>AI-native IoT infrastructure for the <em>Emirates.</em></h1>
-      <p class="lead">Tiotai (Team IoT + AI) is an idea-stage UAE PropTech venture building a unified platform where every connected device like locks, pumps, cameras, and sensors is usable by AI agents, not just visible to humans.</p>
+      <span class="eyebrow">AI-Native IoT Infrastructure</span>
+      <h1>AI-native IoT infrastructure for <em>intelligent systems.</em></h1>
+      <p class="lead">Tiotai (Team IoT + AI) builds unified infrastructure where every connected device — sensors, pumps, valves, and controllers — is usable by AI agents, not just visible to humans. Currently incubated under CWRDM HYDRONIS, working on Tiotai AQUA.</p>
       <div class="cta-row">
-        <a href="mailto:johansanseb@gmail.com?subject=Request%20for%20Tiotai%20Pitch%20Deck" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Request Pitch Deck</a>
+        <a href="mailto:johan@tiotai.com?subject=Request%20for%20Tiotai%20Pitch%20Deck" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Request Pitch Deck</a>
         <a href="#solution" class="btn btn-ghost"><i class="fa-solid fa-diagram-project"></i> Explore the Platform</a>
       </div>
       <div class="ticker">
-        <div class="ticker-item"><span class="num mono">$17.48B</span><span class="label">UAE IoT Market, 2033</span></div>
+        <div class="ticker-item"><span class="num mono">$17.48B</span><span class="label">IoT Market, 2033</span></div>
         <div class="ticker-item"><span class="num mono">32.3%</span><span class="label">Integration CAGR</span></div>
         <div class="ticker-item"><span class="num mono">MCP</span><span class="label">Native Agent Support</span></div>
       </div>
@@ -801,8 +1113,8 @@
         <svg viewBox="0 0 460 480" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#ff6b57"/>
-              <stop offset="100%" stop-color="#ff8569"/>
+              <stop offset="0%" stop-color="#4499f3"/>
+              <stop offset="100%" stop-color="#66b0f5"/>
             </linearGradient>
             <linearGradient id="tealLine" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stop-color="#6fa392"/>
@@ -819,9 +1131,9 @@
 
           <!-- Track 1: Build (coral) curve from top-left -->
           <path d="M40,90 C150,90 150,210 230,210" fill="none" stroke="url(#goldLine)" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="40" cy="90" r="6" fill="#ff8569"/>
-          <circle cx="120" cy="90" r="4" fill="#ff8569" opacity="0.7"/>
-          <circle cx="170" cy="150" r="4" fill="#ff8569" opacity="0.7"/>
+          <circle cx="40" cy="90" r="6" fill="#66b0f5"/>
+          <circle cx="120" cy="90" r="4" fill="#66b0f5" opacity="0.7"/>
+          <circle cx="170" cy="150" r="4" fill="#66b0f5" opacity="0.7"/>
 
           <!-- Track 2: Connect (sage) curve from bottom-left -->
           <path d="M40,330 C150,330 150,250 230,250" fill="none" stroke="url(#tealLine)" stroke-width="2.5" stroke-linecap="round"/>
@@ -830,20 +1142,20 @@
           <circle cx="170" cy="280" r="4" fill="#8fbfae" opacity="0.7"/>
 
           <!-- merge node -->
-          <circle cx="230" cy="230" r="34" fill="#1d1828" stroke="#ff6b57" stroke-width="1.5"/>
+          <circle cx="230" cy="230" r="34" fill="#1d1828" stroke="#4499f3" stroke-width="1.5"/>
           <circle cx="230" cy="230" r="34" fill="none" stroke="#8fbfae" stroke-width="1" stroke-dasharray="2 4"/>
           <text x="230" y="226" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#ece5da">TIOTAI</text>
           <text x="230" y="240" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#a89fc2">PLATFORM</text>
 
           <!-- output fan to right -->
-          <path d="M264,225 C320,200 360,180 410,150" fill="none" stroke="#ff6b57" stroke-width="1.4" opacity="0.55"/>
+          <path d="M264,225 C320,200 360,180 410,150" fill="none" stroke="#4499f3" stroke-width="1.4" opacity="0.55"/>
           <path d="M264,230 C330,230 360,230 410,230" fill="none" stroke="#a89fc2" stroke-width="1.4" opacity="0.5"/>
           <path d="M264,235 C320,260 360,290 410,320" fill="none" stroke="#8fbfae" stroke-width="1.4" opacity="0.55"/>
-          <circle cx="410" cy="150" r="3.5" fill="#ff6b57"/>
+          <circle cx="410" cy="150" r="3.5" fill="#4499f3"/>
           <circle cx="410" cy="230" r="3.5" fill="#a89fc2"/>
           <circle cx="410" cy="320" r="3.5" fill="#8fbfae"/>
 
-          <text x="40" y="75" font-family="JetBrains Mono" font-size="11" fill="#ff8569">TRACK 1: BUILD</text>
+          <text x="40" y="75" font-family="JetBrains Mono" font-size="11" fill="#66b0f5">TRACK 1: BUILD</text>
           <text x="40" y="350" font-family="JetBrains Mono" font-size="11" fill="#8fbfae">TRACK 2: CONNECT</text>
           <text x="395" y="135" font-family="JetBrains Mono" font-size="9" fill="#a89fc2" text-anchor="end">Unified Dashboard</text>
           <text x="395" y="222" font-family="JetBrains Mono" font-size="9" fill="#a89fc2" text-anchor="end">AI Agent MCP API</text>
@@ -927,7 +1239,7 @@
     <div class="section-head">
       <span class="eyebrow">Problem &amp; Market Opportunity</span>
       <h2>Siloed smart devices create blind spots and runaway costs.</h2>
-      <p>Villa communities and corporate properties across the UAE are deploying smart devices in rigid silos. Each vendor demands a separate app, support contract, and data format, and none of these systems are built for AI agents.</p>
+      <p>Villa communities and corporate properties are deploying smart devices in rigid silos. Each vendor demands a separate app, support contract, and data format, and none of these systems are built for AI agents.</p>
     </div>
     <div class="grid-3">
       <div class="card">
@@ -949,12 +1261,12 @@
 
     <div style="margin-top:64px;">
       <span class="eyebrow">Market Timing</span>
-      <h2 style="font-size:clamp(26px,3vw,34px);margin-bottom:8px;">The UAE is one of the most mature, rapidly digitalizing IoT economies.</h2>
+      <h2 style="font-size:clamp(26px,3vw,34px);margin-bottom:8px;">PropTech is one of the most rapidly digitalizing IoT economies.</h2>
     </div>
     <div class="stat-band">
       <div class="stat-tile">
         <span class="big mono">$17.48B</span>
-        <span class="desc">Projected UAE IoT market size by 2033, driven by rapid urban development and subsidized smart city initiatives.</span>
+        <span class="desc">Projected IoT market size by 2033, driven by rapid urban development and smart city initiatives.</span>
       </div>
       <div class="stat-tile">
         <span class="big mono">32.3%</span>
@@ -1018,6 +1330,23 @@
         <h3>MCP Support: The Core Differentiator</h3>
         <p style="margin-bottom: 12px;">Every device and data stream on Tiotai is exposed through the **Model Context Protocol (MCP)**. This is the architectural bet behind the whole company: we want to be infrastructure for agents, not just a reporting layer for people.</p>
         <p>AI agents (whether ours or a client's own tools) can discover, query device state, pull telemetry history, and safely trigger actions through one standardized interface rather than a custom integration per device type.</p>
+      </div>
+    </div>
+
+    <!-- CWRDM HYDRONIS Incubation & Tiotai AQUA -->
+    <div style="margin-top: 48px;">
+      <div class="section-head">
+        <span class="eyebrow" style="color: var(--teal);">Current Project</span>
+        <h2>Tiotai AQUA — Intelligent Water Systems</h2>
+        <p>Tiotai is currently incubated under <strong style="color: var(--ivory);">CWRDM HYDRONIS</strong>, extending our AI-native infrastructure vision into intelligent water systems.</p>
+      </div>
+      <div class="incubation-card">
+        <div class="inc-icon"><i class="fa-solid fa-droplet"></i></div>
+        <div class="inc-body">
+          <h4>Now incubated under CWRDM HYDRONIS</h4>
+          <p>We are working on <strong>Tiotai AQUA</strong> — extending Tiotai's AI-native infrastructure vision into intelligent water systems. Tiotai AQUA applies the same unified IoT + AI agent architecture to water infrastructure monitoring and management.</p>
+          <p style="margin-top: 10px;"><strong style="color: var(--muted);">Status:</strong> <span style="color: var(--teal);">Currently under incubation and development</span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -1151,10 +1480,10 @@
   <div class="closing-card">
     <span class="eyebrow" style="justify-content:center;">For Initiate Program · HOAs · Community Operators</span>
     <h2>AI-native IoT designed for the future of PropTech.</h2>
-    <p>Tiotai is validating early concepts with visionary partners in the UAE. Partner with us during our idea-stage validation to shape the infrastructure of tomorrow.</p>
+    <p>Tiotai is validating early concepts with visionary partners. Partner with us during our idea-stage validation to shape the infrastructure of tomorrow.</p>
     <div class="cta-row">
       <a href="#" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Request Pitch Deck</a>
-      <a href="mailto:johansanseb@gmail.com" class="btn btn-ghost"><i class="fa-solid fa-envelope"></i> Partner with Us</a>
+      <a href="mailto:johan@tiotai.com" class="btn btn-ghost"><i class="fa-solid fa-envelope"></i> Partner with Us</a>
     </div>
   </div>
 </section>
@@ -1163,13 +1492,255 @@
   <div class="footer-inner" style="align-items: center;">
     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
       <img src="tiotai.png" alt="Tiotai Logo" style="height: 42px; width: auto; mix-blend-mode: screen; background: transparent; border: none; box-shadow: none;" />
-      <span>© 2026 Tiotai. United Arab Emirates.</span>
+      <span>© 2026 Tiotai.</span>
     </div>
     <span>Confidential: Prepared for institutional review.</span>
   </div>
 </footer>
 
 </div>
+
+<!-- AGENT VIEW -->
+<div id="agent-content">
+  <div class="agent-wrap">
+    <header class="agent-header">
+      <div class="agent-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+        Agent-Optimized View
+      </div>
+      <h1>Tiotai — <em>AI-Native IoT Infrastructure</em></h1>
+      <p class="agent-summary">This page is structured for machine-readable discovery by LLMs and AI agents. It presents Tiotai's identity, architecture, projects, and relationships in a concise, semantically explicit format.</p>
+    </header>
+
+    <!-- Entity Identity -->
+    <article class="agent-section">
+      <div class="agent-section-label">Entity Identity</div>
+      <dl class="agent-facts">
+        <dt>Name</dt>
+        <dd>Tiotai (Team IoT + AI)</dd>
+        <dt>Type</dt>
+        <dd>AI-native IoT infrastructure company</dd>
+        <dt>Stage</dt>
+        <dd>Incubation-stage venture</dd>
+        <dt>Incubation</dt>
+        <dd>CWRDM HYDRONIS</dd>
+        <dt>Current Project</dt>
+        <dd>Tiotai AQUA</dd>
+        <dt>Domain</dt>
+        <dd>IoT infrastructure, AI agent interoperability, intelligent water systems</dd>
+        <dt>Website</dt>
+        <dd>tiotai-iot.github.io</dd>
+        <dt>Contact</dt>
+        <dd><a href="mailto:johan@tiotai.com" style="color: var(--gold-bright);">johan@tiotai.com</a></dd>
+      </dl>
+    </article>
+
+    <!-- Problem Statement -->
+    <article class="agent-section">
+      <div class="agent-section-label">Problem Statement</div>
+      <h3>What problem does Tiotai solve?</h3>
+      <p>Connected physical devices (sensors, pumps, valves, locks, HVAC systems) operate in rigid vendor silos. Each device requires a separate app, support contract, and data format. No existing platform makes these devices natively discoverable and actionable by AI agents.</p>
+      <p>Tiotai builds the unified software layer that normalizes heterogeneous IoT hardware into a single, AI-agent-accessible interface using the Model Context Protocol (MCP).</p>
+    </article>
+
+    <!-- Core Architecture -->
+    <article class="agent-section">
+      <div class="agent-section-label">Core Architecture</div>
+      <h3>Platform Design</h3>
+      <p>Tiotai's platform is designed around two execution tracks converging into a unified data and control layer:</p>
+      <dl class="agent-facts">
+        <dt>Track 1: Build</dt>
+        <dd>End-to-end hardware design, sourcing, firmware, and commissioning for properties with no existing IoT infrastructure</dd>
+        <dt>Track 2: Connect</dt>
+        <dd>Middleware ingestion layer that standardizes existing third-party devices across protocols (LPWAN, cellular, Wi-Fi, Zigbee, BLE, Matter) into one clean data layer</dd>
+        <dt>AI Engine</dt>
+        <dd>Predictive maintenance, anomaly detection, and climate intelligence driven by unified telemetry</dd>
+        <dt>MCP Layer</dt>
+        <dd>Every device and data stream is exposed through the Model Context Protocol, making the entire infrastructure natively accessible to AI agents</dd>
+      </dl>
+    </article>
+
+    <!-- Key Relationships -->
+    <article class="agent-section">
+      <div class="agent-section-label">Key Relationships</div>
+      <ul class="agent-triples">
+        <li>
+          <span class="triple-subject">Tiotai</span>
+          <span class="triple-predicate">builds</span>
+          <span class="triple-object">AI-native IoT infrastructure</span>
+        </li>
+        <li>
+          <span class="triple-subject">Tiotai</span>
+          <span class="triple-predicate">connects</span>
+          <span class="triple-object">physical devices and infrastructure via unified middleware</span>
+        </li>
+        <li>
+          <span class="triple-subject">Tiotai</span>
+          <span class="triple-predicate">enables</span>
+          <span class="triple-object">AI agents to discover, query, and actuate physical infrastructure</span>
+        </li>
+        <li>
+          <span class="triple-subject">Tiotai</span>
+          <span class="triple-predicate">uses</span>
+          <span class="triple-object">Model Context Protocol (MCP) as its core interoperability layer</span>
+        </li>
+        <li>
+          <span class="triple-subject">Tiotai</span>
+          <span class="triple-predicate">is incubated under</span>
+          <span class="triple-object">CWRDM HYDRONIS</span>
+        </li>
+        <li>
+          <span class="triple-subject">Tiotai</span>
+          <span class="triple-predicate">is working on</span>
+          <span class="triple-object">Tiotai AQUA — intelligent water systems</span>
+        </li>
+        <li>
+          <span class="triple-subject">Tiotai AQUA</span>
+          <span class="triple-predicate">applies</span>
+          <span class="triple-object">AI-native IoT architecture to water infrastructure monitoring and management</span>
+        </li>
+        <li>
+          <span class="triple-subject">Tiotai</span>
+          <span class="triple-predicate">is related to</span>
+          <span class="triple-object">Farm21 (hardware expertise in ag-tech)</span>
+        </li>
+      </ul>
+    </article>
+
+    <!-- Technologies & Protocols -->
+    <article class="agent-section">
+      <div class="agent-section-label">Technologies & Protocols</div>
+      <h3>Technical Stack</h3>
+      <div class="agent-tags">
+        <span>MCP</span>
+        <span>MQTT</span>
+        <span>LPWAN</span>
+        <span>Zigbee</span>
+        <span>BLE</span>
+        <span>Matter</span>
+        <span>Wi-Fi</span>
+        <span>Cellular</span>
+        <span>Custom Firmware</span>
+        <span>Edge AI</span>
+        <span>Telemetry Pipelines</span>
+      </div>
+    </article>
+
+    <!-- Current Status -->
+    <article class="agent-section">
+      <div class="agent-section-label">Current Status</div>
+      <div class="agent-status-grid">
+        <div class="agent-status-card">
+          <div class="status-label">Incubation</div>
+          <div class="status-value">CWRDM HYDRONIS</div>
+        </div>
+        <div class="agent-status-card">
+          <div class="status-label">Current Project</div>
+          <div class="status-value">Tiotai AQUA</div>
+        </div>
+        <div class="agent-status-card">
+          <div class="status-label">Development Stage</div>
+          <div class="status-value">Under incubation and development</div>
+        </div>
+        <div class="agent-status-card">
+          <div class="status-label">Focus Area</div>
+          <div class="status-value">Intelligent water systems</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Products & Concept Modules -->
+    <article class="agent-section">
+      <div class="agent-section-label">Products & Concept Modules</div>
+      <dl class="agent-facts">
+        <dt>Tiotai AQUA</dt>
+        <dd>Current active project under CWRDM HYDRONIS incubation — AI-native infrastructure for intelligent water systems. Status: under development.</dd>
+        <dt>Tiotai GATE</dt>
+        <dd>Concept module — cloud-based smart access control with time-bound digital codes and unified lock management</dd>
+        <dt>Tiotai POOL</dt>
+        <dd>Concept module — underwater motion/sonar + AI vision for drowning prevention in community pools</dd>
+        <dt>Tiotai GREEN</dt>
+        <dd>Concept module — soil-moisture + weather-driven irrigation automation with pump protection</dd>
+        <dt>Tiotai CIVIC</dt>
+        <dd>Concept module — municipal infrastructure monitoring (waste fill-levels, air quality, water flow)</dd>
+        <dt>Tiotai CAMPUS</dt>
+        <dd>Concept module — corporate occupancy-driven HVAC/BMS integration and unified access credentials</dd>
+      </dl>
+    </article>
+
+    <!-- Business Model -->
+    <article class="agent-section">
+      <div class="agent-section-label">Business Model</div>
+      <dl class="agent-facts">
+        <dt>Revenue Model</dt>
+        <dd>Dual-revenue: one-time project/setup fee + recurring per-device SaaS subscription</dd>
+        <dt>Positioning</dt>
+        <dd>Managed operations layer above hardware vendors and below end users — complements (does not compete with) telecom providers and global cloud platforms</dd>
+        <dt>Differentiation</dt>
+        <dd>Native MCP API for AI agent interoperability — no other competitor offers this natively</dd>
+      </dl>
+    </article>
+
+    <!-- Contact -->
+    <article class="agent-section">
+      <div class="agent-section-label">Contact & Partnership</div>
+      <dl class="agent-facts">
+        <dt>Email</dt>
+        <dd><a href="mailto:johan@tiotai.com" style="color: var(--gold-bright);">johan@tiotai.com</a></dd>
+        <dt>Pitch Deck</dt>
+        <dd><a href="mailto:johan@tiotai.com?subject=Request%20for%20Tiotai%20Pitch%20Deck" style="color: var(--gold-bright);">Request via email</a></dd>
+        <dt>Website</dt>
+        <dd><a href="https://tiotai-iot.github.io" style="color: var(--gold-bright);">tiotai-iot.github.io</a></dd>
+      </dl>
+    </article>
+
+    <div class="agent-footer">
+      <p>&copy; 2026 Tiotai. This structured view is designed for LLM and AI agent consumption.</p>
+      <p style="margin-top: 8px;"><a href="#" onclick="document.querySelector('.mode-btn:first-child')?.click(); return false;">Switch to Website view</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Structured Data (JSON-LD) for machine discovery -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Tiotai",
+  "alternateName": "Team IoT + AI",
+  "url": "https://tiotai-iot.github.io",
+  "description": "Tiotai builds AI-native IoT infrastructure that makes physical devices — sensors, pumps, valves, and controllers — natively discoverable and actionable by AI agents through the Model Context Protocol (MCP).",
+  "foundingDate": "2026",
+  "email": "johan@tiotai.com",
+  "knowsAbout": [
+    "Internet of Things",
+    "AI Agent Infrastructure",
+    "Model Context Protocol",
+    "Smart Water Systems",
+    "PropTech",
+    "Edge Computing",
+    "Sensor Networks"
+  ],
+  "memberOf": {
+    "@type": "Organization",
+    "name": "CWRDM HYDRONIS",
+    "description": "Incubation program under CWRDM"
+  },
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Tiotai AQUA",
+      "description": "AI-native infrastructure for intelligent water systems. Currently under incubation and development under CWRDM HYDRONIS.",
+      "availability": "https://schema.org/InStoreOnly",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Tiotai AQUA",
+        "description": "Extends Tiotai's AI-native infrastructure vision into intelligent water systems monitoring and management."
+      }
+    }
+  ]
+}
+</script>
 
 <!-- Dither background, real bundler build: see src/dither-mount.jsx -->
 <!-- CurvedLoop marquee divider: see src/curved-loop-mount.jsx -->
@@ -1179,3 +1750,4 @@
 
 </body>
 </html>
+

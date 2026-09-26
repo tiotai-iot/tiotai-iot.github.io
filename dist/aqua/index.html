@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiotai AQUA</title>
+  <style>
+    :root { color-scheme: dark; --bg: #080a0a; --surface: #0f1212; --surface-2: #141818; --surface-3: #181d1d; --line: #242b2b; --text: #f3f6f5; --muted: #899492; --accent: #73d8c5; --green: #30d158; --yellow: #ffd60a; --red: #ff453a; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, sans-serif; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    .shell { max-width: 1420px; margin: auto; padding: 42px 42px 60px; }
+    .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; padding-bottom: 34px; border-bottom: 1px solid var(--line); }
+    .wordmark { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .2em; }
+    h1 { margin: 14px 0 0; font-size: clamp(34px, 4vw, 58px); letter-spacing: -.05em; font-weight: 600; line-height: 1; }
+    .device-header { display: flex; flex: 0 0 auto; align-items: flex-start; gap: 16px; padding-top: 5px; text-align: right; }
+    .live { color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+    .live::before { animation: pulse 2.4s ease-out infinite; }
+    @keyframes pulse { 0%, 70%, 100% { box-shadow: 0 0 0 4px rgba(48,209,88,.08); } 35% { box-shadow: 0 0 0 8px rgba(48,209,88,0); } }
+    .live::before, .connected::before { content: ""; display: inline-block; width: 7px; height: 7px; margin: 0 7px 1px 0; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(48,209,88,.08); }
+    .device-name { margin-top: 6px; font-size: 16px; font-weight: 600; }
+    .location { color: var(--muted); font-size: 13px; }
+    .section-label { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .summary { margin: 28px 0 34px; padding: 28px 32px 30px; background: linear-gradient(135deg, var(--surface-2), var(--surface)); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 18px 60px rgba(0,0,0,.18); }
+    .summary-top, .summary-bottom, .panel-top, .footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .summary h2 { max-width: 720px; margin: 25px 0 10px; font-size: clamp(25px, 3vw, 38px); letter-spacing: -.04em; font-weight: 600; line-height: 1.1; }
+    .summary-copy { max-width: 650px; margin: 0 0 26px; color: #b8c3c0; font-size: 16px; }
+    .summary-status { color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: .11em; }
+    .time { color: var(--muted); font-size: 12px; }
+    .outline-button { border: 1px solid #365b54; border-radius: 9px; padding: 11px 15px; background: transparent; color: var(--accent); font-weight: 600; }
+    .outline-button:hover { background: rgba(115,216,197,.08); }
+    .outline-button:disabled { opacity: .45; cursor: wait; }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(320px, .85fr); gap: 18px; align-items: stretch; }
+    .telemetry, .chat { min-width: 0; }
+    .panel-title { margin: 0; font-size: 20px; letter-spacing: -.02em; font-weight: 600; }
+    .sensor-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 17px 0; }
+    .sensor { min-height: 156px; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; transition: background .2s, border-color .2s; }
+    .sensor:hover { background: var(--surface-2); border-color: #35403e; }
+    .sensor-name { color: var(--muted); font-size: 12px; }
+    .sensor-value { margin: 22px 0 15px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: clamp(25px, 3vw, 37px); letter-spacing: -.07em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .unit { color: var(--muted); font-family: inherit; font-size: 13px; letter-spacing: 0; }
+    .sensor-status { color: var(--green); font-size: 11px; font-weight: 700; }
+    .chart-panel { padding: 23px 24px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+    .range { display: flex; gap: 3px; padding: 3px; background: var(--surface-3); border-radius: 7px; }
+    .range button { border: 0; border-radius: 5px; padding: 6px 9px; background: transparent; color: var(--muted); font-size: 11px; font-weight: 700; }
+    .range button.active { background: #2a3533; color: var(--text); }
+    .legend { display: flex; gap: 18px; margin: 18px 0 3px; color: var(--muted); font-size: 12px; }
+    .legend span::before { content: ""; display: inline-block; width: 18px; height: 2px; margin: 0 7px 3px 0; background: #ff7a1a; }
+    .legend .ph::before { background: var(--yellow); }
+    .chart { display: block; width: 100%; height: 255px; }
+    .chart-grid { stroke: #202827; stroke-width: 1; }
+    .chart-line { fill: none; stroke: #ff7a1a; stroke-width: 2.5; }
+    .chart-line.ph { stroke: var(--yellow); }
+    .chart-text { fill: #687572; font-size: 10px; }
+    .chat { display: flex; min-height: 560px; flex-direction: column; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+    .chat-title { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 19px; border-bottom: 1px solid var(--line); }
+    .chat-title h2 { margin: 4px 0 0; font-size: 21px; letter-spacing: -.03em; }
+    .connected { color: var(--green); font-size: 11px; }
+    .messages { display: flex; flex: 1; flex-direction: column; gap: 20px; overflow: auto; padding: 24px 0; }
+    .message { max-width: 91%; }
+    .message.user { align-self: flex-end; }
+    .message-label { margin-bottom: 7px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .13em; }
+    .message-body { padding: 13px 15px; border-radius: 12px; background: var(--surface-2); color: #c6cfcd; white-space: pre-wrap; }
+    .user .message-body { background: #203a36; color: #e4f7f2; }
+    .suggestions { display: flex; flex-direction: column; gap: 8px; margin: auto 0 18px; }
+    .suggestion { border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; background: transparent; color: #aab7b4; text-align: left; font-size: 12px; }
+    .suggestion:hover { border-color: #46645e; color: var(--text); }
+    .composer { display: flex; gap: 8px; align-items: center; border: 1px solid #303a38; border-radius: 11px; padding: 6px 6px 6px 13px; background: var(--surface-2); }
+    .composer input { min-width: 0; flex: 1; border: 0; outline: 0; background: transparent; color: var(--text); }
+    .composer input::placeholder { color: #697571; }
+    .send { width: 34px; height: 34px; border: 0; border-radius: 8px; background: var(--accent); color: #10201d; font-size: 19px; line-height: 1; }
+    .error { min-height: 20px; margin-top: 8px; color: var(--red); font-size: 12px; }
+    .location-section { margin-top: 32px; }
+    .location-grid { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 18px; margin-top: 16px; }
+    .location-card, .map-shell { min-height: 300px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
+    .location-card strong { display: block; margin: 16px 0 4px; font-size: 19px; }
+    .location-card p { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+    .coordinates { margin-top: 24px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+    .map-shell { position: relative; overflow: hidden; padding: 0; }
+    #map { width: 100%; height: 300px; min-height: 300px; background: #111a1b; }
+    .dark-tiles { filter: brightness(.62) saturate(.65) hue-rotate(155deg); }
+    .map-empty { display: grid; height: 100%; min-height: 300px; place-items: center; padding: 24px; color: var(--muted); text-align: center; }
+    .map-empty strong { display: block; margin-bottom: 6px; color: var(--text); }
+    .footer { margin-top: 30px; padding: 20px 2px 0; align-items: flex-start; }
+    .device-info { display: flex; gap: 28px; align-items: flex-start; }
+    .device-info strong { display: block; margin: 5px 0 2px; font-size: 15px; }
+    .device-info span { color: var(--muted); font-size: 12px; }
+    .status-list { display: flex; gap: 20px; color: var(--muted); font-size: 12px; }
+    .status-list span::before { content: "●"; margin-right: 7px; color: var(--green); }
+    .empty { color: var(--muted); padding: 55px 0; text-align: center; }
+    @media (max-width: 950px) { .shell { padding: 28px 22px 45px; } .workspace { grid-template-columns: 1fr; } .chat { min-height: 500px; } }
+    @media (max-width: 620px) { .header, .summary-top, .summary-bottom, .footer { display: block; } .device-header { margin-top: 22px; text-align: left; } .sensor-grid { grid-template-columns: repeat(2, 1fr); } .summary { padding: 23px 20px; } .summary-bottom { display: flex; } .device-info, .status-list { margin-top: 20px; flex-wrap: wrap; gap: 13px 20px; } .location-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="header">
+      <div><div class="wordmark">TIOTAI AQUA</div><h1>Water Intelligence</h1></div>
+      <div class="device-header"><div><div class="live">LIVE</div><div class="device-name" id="deviceName">iopool</div><div class="location" id="location">AQUA Demo Tank</div></div></div>
+    </header>
+
+    <section class="summary" aria-live="polite">
+      <div class="summary-top"><div class="section-label">AI Water Advisor</div><div class="time" id="analysisTime">Awaiting telemetry</div></div>
+      <h2 id="summaryTitle">Connect telemetry to understand the system.</h2>
+      <p class="summary-copy" id="summaryCopy">Tiotai will compare current readings with recent history and surface the important changes.</p>
+      <div class="summary-bottom"><div class="summary-status" id="summaryStatus">● WAITING FOR DATA</div><button class="outline-button" id="analyze">Analyze current system&nbsp; →</button></div>
+    </section>
+
+    <div class="workspace">
+      <section class="telemetry">
+        <div class="panel-top"><div><div class="section-label">Water Quality</div><h2 class="panel-title">Current readings</h2></div><button class="outline-button" id="refresh">Refresh</button></div>
+        <div class="sensor-grid" id="sensors"><div class="empty">Connecting to iopool...</div></div>
+        <section class="chart-panel"><div class="panel-top"><div><div class="section-label">Water Quality</div><h2 class="panel-title">Trends</h2></div><div class="range"><button class="active" data-hours="24">24H</button><button data-hours="168">7D</button><button data-hours="720">30D</button></div></div><div class="legend"><span>ORP</span><span class="ph">pH</span></div><svg class="chart" id="chart" viewBox="0 0 760 255" preserveAspectRatio="none"></svg></section>
+      </section>
+
+      <aside class="chat"><div class="chat-title"><div><div class="section-label">Tiotai AI</div><h2>Water Advisor</h2></div><div class="connected">Connected to AQUA</div></div><div class="messages" id="messages"></div><div class="suggestions" id="suggestions"><button class="suggestion">What's happening with the water?</button><button class="suggestion">What changed recently?</button><button class="suggestion">Explain the current readings</button><button class="suggestion">What should I monitor?</button></div><div class="composer"><input id="question" placeholder="Ask Tiotai about this system..."><button class="send" id="ask" aria-label="Send question">↑</button></div><div class="error" id="error"></div></aside>
+    </div>
+
+    <section class="location-section"><div class="section-label">Location</div><div class="location-grid"><div class="location-card"><div class="section-label">AQUA Installation</div><strong id="locationName">AQUA Demo Tank</strong><p><span id="locationDevice">iopool</span><br><span class="connected">Connected</span></p><div class="section-label">Last reading</div><strong id="locationUpdated">Waiting</strong><div class="coordinates" id="coordinates"></div></div><div class="map-shell"><div id="map"><div class="map-empty"><div><strong>Location not configured</strong>Set AQUA_LATITUDE and AQUA_LONGITUDE to show the installation.</div></div></div></div></div></section>
+
+    <footer class="footer"><div class="device-info"><div><div class="section-label">Device</div><strong id="footerDevice">iopool</strong><span id="footerLocation">AQUA Demo Tank</span></div><div><div class="section-label">Last reading</div><strong id="updated">Waiting</strong><span class="connected">Connected</span></div></div><div><div class="section-label">System Status</div><div class="status-list"><span>Sensors connected</span><span>Data pipeline active</span><span>AI advisor online</span></div></div></footer>
+  </main>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    const $ = id => document.getElementById(id);
+    const names = { ph: ['pH', ''], orp_mv: ['ORP', 'mV'], temperature_c: ['Temperature', '°C'], conductivity_us_cm: ['Conductivity', 'μS/cm'] };
+    let current = null, historyReadings = [], map = null;
+    function showError(message = '') { $('error').textContent = message; }
+    function formatValue(key, value) { return Number(value).toFixed(key === 'ph' ? 2 : 1); }
+    function renderSensors(data) {
+      const entries = Object.entries(data.measurements || {});
+      $('sensors').innerHTML = entries.length ? entries.map(([key, value]) => `<article class="sensor"><div class="sensor-name">${names[key]?.[0] || key}</div><div class="sensor-value">${formatValue(key, value)} <span class="unit">${names[key]?.[1] || ''}</span></div><div class="sensor-status">● Normal</div></article>`).join('') : '<div class="empty">No measurements available.</div>';
+      const location = data.location?.name || 'AQUA Demo Tank', time = new Date(data.timestamp).toLocaleTimeString(); $('location').textContent = location; $('footerLocation').textContent = location; $('deviceName').textContent = data.device || 'iopool'; $('footerDevice').textContent = data.device || 'iopool'; $('updated').textContent = time; $('locationName').textContent = location; $('locationDevice').textContent = data.device || 'iopool'; $('locationUpdated').textContent = time; renderMap(data.location, location, data.device || 'iopool', time);
+    }
+    function renderMap(location, name, device, time) { const hasCoordinates = Number.isFinite(Number(location?.latitude)) && Number.isFinite(Number(location?.longitude)); if (!hasCoordinates || typeof L === 'undefined') return; const point = [Number(location.latitude), Number(location.longitude)]; if (!map) { $('map').innerHTML = ''; map = L.map('map', { zoomControl: true }).setView(point, 14); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', className: 'dark-tiles' }).addTo(map); L.marker(point).addTo(map).bindPopup(`<strong>${name}</strong><br>${device}<br><span style="color:#30d158">● Connected</span><br>Last reading ${time}`); } else { map.setView(point); } $('coordinates').textContent = `${Number(location.latitude).toFixed(4)}°, ${Number(location.longitude).toFixed(4)}°`; }
+    function localSummary() {
+      if (!current) return;
+      const values = current.measurements || {}, changes = {};
+      historyReadings.forEach(item => Object.keys(values).forEach(key => { if (item[key] != null) (changes[key] ||= []).push(Number(item[key])); }));
+      const changing = Object.entries(changes).filter(([, items]) => items.length > 1 && Math.abs(items.at(-1) - items[0]) > (items[0] ? Math.abs(items[0]) * .03 : .1));
+      $('summaryTitle').textContent = changing.length ? 'A small change is developing.' : 'Everything looks stable.';
+      $('summaryCopy').textContent = changing.length ? `${changing.map(([key]) => names[key]?.[0] || key).join(', ')} has shifted across the latest readings. Continue monitoring the trend for a sustained change.` : 'ORP, pH and temperature have remained consistent across the latest readings. No significant changes have been detected.';
+      $('summaryStatus').textContent = changing.length ? '● MONITORING TREND' : '● SYSTEM STABLE'; $('analysisTime').textContent = `Last analysis ${new Date().toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'})}`;
+    }
+    function plot(readings, key) { const values = readings.map(item => Number(item[key])).filter(Number.isFinite); if (values.length < 2) return ''; const min = Math.min(...values), max = Math.max(...values), span = max - min || 1; return values.map((value, index) => `${index ? 'L' : 'M'} ${35 + index * 690 / (values.length - 1)} ${215 - (value - min) / span * 175}`).join(' '); }
+    function drawChart(readings) { const svg = $('chart'); if (readings.length < 2) { svg.innerHTML = '<text x="380" y="130" text-anchor="middle" class="chart-text">History will appear after readings are received.</text>'; return; } const orp = plot(readings, 'orp_mv'), ph = plot(readings, 'ph'); svg.innerHTML = [35, 95, 155, 215].map(y => `<line class="chart-grid" x1="35" y1="${y}" x2="725" y2="${y}"/>`).join('') + (orp ? `<path class="chart-line" d="${orp}"/>` : '') + (ph ? `<path class="chart-line ph" d="${ph}"/>` : ''); }
+    async function loadHistory(hours = 24) { const response = await fetch(`/api/telemetry/history?hours=${hours}`); const data = await response.json(); historyReadings = data.readings || []; drawChart(historyReadings); localSummary(); }
+    async function refresh() { showError(''); $('refresh').disabled = true; try { const response = await fetch('/api/telemetry'); const data = await response.json(); if (!response.ok) throw Error(data.message || 'iopool temporarily unavailable.'); current = data; renderSensors(data); await loadHistory(); } catch (error) { $('summaryTitle').textContent = 'Telemetry is temporarily unavailable.'; $('summaryCopy').textContent = 'Tiotai could not receive a fresh reading. Check the device connection and try again when the data pipeline is available.'; $('summaryStatus').textContent = '● AWAITING DATA'; $('analysisTime').textContent = 'No current reading'; showError(error.message); } finally { $('refresh').disabled = false; } }
+    function addMessage(label, text, type) { const item = document.createElement('div'); item.className = `message ${type}`; item.innerHTML = `<div class="message-label">${label}</div><div class="message-body"></div>`; item.querySelector('.message-body').textContent = text; $('messages').appendChild(item); $('messages').scrollTop = $('messages').scrollHeight; }
+    async function ask(question) { question = question || $('question').value.trim(); if (!question) return; $('question').value = ''; $('suggestions').style.display = 'none'; addMessage('YOU', question, 'user'); addMessage('TIOTAI', 'Analyzing current and historical telemetry...', 'assistant'); const pending = $('messages').lastElementChild.querySelector('.message-body'); try { const response = await fetch('/api/ai/analyze', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({question}) }); const data = await response.json(); if (!response.ok) throw Error(data.message || 'AI Advisor temporarily unavailable.'); pending.textContent = data.answer; $('summaryTitle').textContent = 'Analysis updated.'; $('summaryCopy').textContent = data.answer; $('summaryStatus').textContent = '● SYSTEM ANALYZED'; $('analysisTime').textContent = `Last analysis ${new Date().toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'})}`; } catch (error) { pending.textContent = 'AI Advisor temporarily unavailable. Please try again.'; showError(error.message); } }
+    $('refresh').onclick = refresh; $('analyze').onclick = () => ask('What is happening with this water system?'); $('ask').onclick = () => ask(); $('question').onkeydown = event => { if (event.key === 'Enter') ask(); }; document.querySelectorAll('.suggestion').forEach(button => button.onclick = () => ask(button.textContent)); document.querySelectorAll('.range button').forEach(button => button.onclick = () => { document.querySelectorAll('.range button').forEach(item => item.classList.remove('active')); button.classList.add('active'); loadHistory(button.dataset.hours); }); refresh(); setInterval(refresh, 180000);
+  </script>
+</body>
+</html>
